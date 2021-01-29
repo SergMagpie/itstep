@@ -1,5 +1,7 @@
 # Cut off zeroes if numbers are integers (Beautiful is better than ugly)
 def cut_off_zeroes(float_number):
+    '''This function trims the zeros after the decimal point 
+    because I don't like the way they look on the screen.'''
     if not float_number % 1:
         return int(float_number)
     else:
