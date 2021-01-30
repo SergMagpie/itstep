@@ -6,5 +6,5 @@ def convert(seconds):
     minutes = seconds // 60
     seconds %= 60
     print(f'{days}:{hours}:{minutes}:{seconds}')
-
+# It's great
 convert(1234565)
