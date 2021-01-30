@@ -1,0 +1,75 @@
+     Заняття №2. Домашнє завдання Сорокіна Сергія
+     
+     1. Напишіть команду для відображення повного шляху до поточної директорії.
+     
+     unix: pwd
+     
+     windows: шлях до директорії відображається в рядку запрошення у вигляді D:\itstep>
+     
+     2. Напишіть команду для відображення назви поточного користувача.
+     
+     unix: whoami
+     
+     windows: net user
+     
+     3. Напишіть команду, що відобразить вміст поточної папки у вигляді списку включаючи приховані файли.
+     
+     unix: ls -a
+     
+     windows: dir /a
+     
+     4. Напишіть команду для виведення вмісту файлу в консоль.
+     
+     unix: cat \filename
+     
+     windows: copy filename con
+     
+     5. Напишіть команду, що вміст файлу initial.txt запише? ?в файл ?destination.txt. ?В разі якщо файлу ?destination.txt не існує, команда має його створити, якщо файл вже існував і в нього було щось записане, то команда перезапише вміст даними з файлу ?initial.txt.
+     
+     unix: cp initial.txt destination.txt
+     
+     windows: copy ?initial.txt destination.txt - якщо файлу ?destination.txt не існує, команда його створить, якщо файл вже існував, команда запитає Overwrite destination.txt?
+     
+     6. Напишіть команди по черзі, які виконають такі дії:
+     a. Створить файл ?main.py
+     b. Впише в файл рядок ?print(“My terminal skills is masterpiece”)
+     c. Виконає файл ?main.py ?за допомогою python інтерпретатора.
+     
+     unix: echo ‘print(“My terminal skills is masterpiece”)’ > main.py
+     python main.py
+     
+     windows: copy con main.py
+     print(“My terminal skills is masterpiece”)^Z
+     python main.py
+     
+     7. Напишіть команду, що встановить в поточне віртуальне середовище python модулі з файлу ?requirements.txt.
+     
+     unix: pip install –r requirements.txt
+     
+     windows: pip install –r requirements.txt
+     
+     8. Напишіть команду, що видалить з поточного віртуального середовища python бібліотеку (модуль) numpy.
+     
+     unix: pip uninstall numpy
+     
+     windows: pip uninstall numpy
+     
+     Додаткові завдання
+     
+     1. Напишіть як встановити команду ?git ?в термінал.
+     
+     unix: sudo apt-get install git
+     
+     windows: встановити з сайту https://git-scm.com/download/win
+     
+     2. Створіть аккаунт в будь-якому сервісі провайдері git’а (GitHub, Gitlab, BitBucket, …). Залиште посилання на свій аккаунт.
+     
+     https://github.com/SergMagpie
+     
+     3. Створіть свій перший репозиторій та назвіть його ?itstep і зробіть його публічним. Залиште посилання на нього.
+     
+     https://github.com/SergMagpie/itstep
+     
+     4. Склонуйте репозиторій ?itstep ?на комп’ютер. Створіть в директорії файл ?hard_play.py? та впишіть в файл свою студентську пошту яка закінчується на @itstep.academy?. Та запуште дані на сервер.
+     
+     Зроблено.
