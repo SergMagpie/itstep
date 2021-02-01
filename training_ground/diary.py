@@ -1,5 +1,7 @@
-day_of_week = ['Monday', 'Tuesday', 'Wednesday',
+day_of_Week = ['Monday', 'Tuesday', 'Wednesday',
                'Thursday', 'Friday', 'Saturday', 'Sunday']
+day_of_week = ['monday', 'tuesday', 'wednesday',
+               'thursday', 'friday', 'saturday', 'sunday']
 diary = {'Monday': ["at 4pm Read the 'The Children of Captain Grant'", 
          "at 8pm Meeting with friend Ivan"], 'Tuesday': ["at 4pm Read the 'The Children of Captain Grant'", 
          "at 8pm Meeting with friend Ivan"], 'Wednesday': ["at 4pm Read the 'The Children of Captain Grant'", 
@@ -16,8 +18,11 @@ if day.isdigit():
     if 0 < number < 8:
         day = day_of_week[number]
 if day in day_of_week:
+    day = day_of_Week[day_of_week.index(day)]
+if day in day_of_Week:
     print('You have', len(diary[day]), 'tasks on', day)
     print(*diary[day], sep='\n')
 else:
     print('You make mistake')
+    
 
