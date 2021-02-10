@@ -1,6 +1,11 @@
-for a in range(33):
-    for b in range(33):
-        for c in range(33):
-            for d in range(33):
-                if a ** 3 + b ** 3 == c ** 3 + d ** 3 and a != b and b != c and c != d and a != c and a != d:
-                    print(a, b, c, d, a**3+b**3)
+first_num = []
+for i in range(2, 300):
+    for g in range(2, i):
+        if i % g == 0:
+            break
+    else:
+        first_num.append(i)
+    if len(first_num) == 35:
+        break
+print(*first_num, sep=", ")
+
