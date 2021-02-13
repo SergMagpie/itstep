@@ -396,3 +396,5 @@ print("repr: {p!r}, str: {p!s}".format(p=Person()))
 >>> total = 22
 >>> 'Correct answers: {:.2%}'.format(points/total)
 'Correct answers: 88.64%'
+
+[el for lst in s for el in lst] # так я раскрываю вложенный список s
