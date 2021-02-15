@@ -6,8 +6,8 @@ def is_num_simple(number):
         for test in range(2, int(number ** 0.5 + 1)):
             if number % test == 0:
                 return False
-            else:
-                return True
+        else:
+            return True
     else:
         return False
 
