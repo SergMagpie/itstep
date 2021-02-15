@@ -8,6 +8,8 @@ def is_num_simple(number):
                 return False
             else:
                 return True
+    else:
+        return False
 
 
 for i in range(20):
