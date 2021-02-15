@@ -10,4 +10,4 @@ def sum_range(start_n, end_n):
         return None
 
 
-print(sum_range(-5, 20))
+print(sum_range(1, 4))
