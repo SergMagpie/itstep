@@ -17,8 +17,10 @@ approach № {num_approach} or 'stop' to stop: ")
 print('You a superman!')
 print(f'You have done {len(list_approach)} approaches!')
 print(f'The total number of repetitions was {sum(list_approach)}!')
-print(f'The maximum number of repetitions was {max(list_approach)}!')
-print(f'The minimum number of repetitions was {min(list_approach)}!')
+print(f'The maximum number of repetitions was \
+{(max(list_approach) if list_approach else 0)}!')
+print(f'The minimum number of repetitions was \
+{(min(list_approach) if list_approach else 0)}!')
 print(f'The average number of repetitions was \
-{sum(list_approach) / len(list_approach)}!')
+{(sum(list_approach) / len(list_approach) if list_approach else 0)}!')
 print('Till next time!')
