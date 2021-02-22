@@ -25,3 +25,7 @@ print(text1)
 
 task = lambda x: x.upper()
 print(*[task(t) for t in text])
+
+print(id(lambda x: x))
+
+print(dir())
