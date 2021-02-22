@@ -10,6 +10,8 @@ print(s1)
 n = [0,3,5, 10, 15, 20, 25]
 n1 = list(map(lambda x: x ** 2 if 10 <= x <=20 else None, n))
 print(n1)
+n2 = [x ** 2 for x in n if 10 <= x <=20]
+print(n2)
 
 # task 4
 text = ['ghsdgdf', 'fdsa' , 'Dagagr']
@@ -20,3 +22,6 @@ print(text1)
 text = ['ghsdgdf', 'fdsa' , 'Dagagr']
 text1 = list(map(lambda x: x.upper(), text))
 print(text1)
+
+task = lambda x: x.upper()
+print(*[task(t) for t in text])
