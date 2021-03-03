@@ -1,5 +1,2 @@
-def f(a=[0]):
-    a[0] += 1
-    return a[0]
-
-print(*[f() for _ in range(10)])
+dic = {[1,2,3]:'df',(4,5,6):'rr'}
+print(dic[[1,2,3]])
