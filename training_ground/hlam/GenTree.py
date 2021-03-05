@@ -1,22 +1,22 @@
 while input('Строим дерево? y/n\n') == 'y':
-    
+
     tree = []
 
     if input('Дерево новое, или возьмем пример? новое - y\n') == 'y':
 
         enother_branch = True
-    
+
         while enother_branch:
             father = input('Father name ')
             son = input('Son name ')
-            tree.append([father,son])
+            tree.append([father, son])
             enother_branch = input('Следующая ветка? y/n\n') == 'y'
-    else: tree = [['Logan','Mike'],['Logan','Jack'],['Mike','Alexander'],
-                  ['Antonio','Hose'],['Dima','Logan'],['Alexander','Basil']]
+    else:
+        tree = [['Logan', 'Mike'], ['Logan', 'Jack'], ['Mike', 'Alexander'],
+                ['Antonio', 'Hose'], ['Dima', 'Logan'], ['Alexander', 'Basil']]
 
+    print('Задача:\n', tree)
 
-    print('Задача:\n',tree)
-    
     '''список пап'''
     fathers = []
     for i in range(len(tree)):
@@ -26,7 +26,6 @@ while input('Строим дерево? y/n\n') == 'y':
     sons = []
     for i in range(len(tree)):
         sons.append(tree[i][1])
-    
 
     '''поиск суперпап'''
     superfathers = []
@@ -35,9 +34,8 @@ while input('Строим дерево? y/n\n') == 'y':
         if father not in sons:
             superfathers.append([father])
 
-        
     '''дети суперпап'''
-    
+
     for i in range(len(superfathers)):
         sons = []
         for m in range(len(tree)):
@@ -57,10 +55,8 @@ while input('Строим дерево? y/n\n') == 'y':
                     sons.append(sons2)
         superfathers[i].append(sons)
 
-
-    print('Решение:\n',superfathers)
-    
-        
+    print('Решение:\n', superfathers, '\n', 'Дерево достоверно' if len(
+        superfathers) == 1 else 'Дерево недостоверно')
 
 
 print('До новых встреч!')
