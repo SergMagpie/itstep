@@ -5,7 +5,7 @@ user_color = input('Please input color with  red, orange, yellow,\
 if user_color in rainbow_colors:
     index = rainbow_colors.index(user_color)
 
-    print(rainbow_colors[index-1] if index > 1 else '',
+    print(rainbow_colors[index-1] if index > 0 else '',
           user_color, rainbow_colors[index+1] if index < 6 else '')
 else:
     print('You make mistake')
