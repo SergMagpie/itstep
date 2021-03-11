@@ -1,5 +1,5 @@
-def same_spells(ron_spells: set, harry_spells: set) -> set:
-    return ron_spells & harry_spells
+def learn_all(my_spells: set, teacher_spells: set) -> set:
+    return my_spells | teacher_spells
 
 
 if __name__ == "__main__":
@@ -10,5 +10,5 @@ if __name__ == "__main__":
              "Wingardium Leviosa",
              "Expelliarmus",
              "Expecto patronum"}
-    print(same_spells(Ron, Harry))
-    # {"Accio", "Wingardium Leviosa"}
+    print(learn_all(Ron, Harry))
+    # {"Accio", "Wingardium Leviosa", "Alohomora", "Expelliarmus", "Expecto patronum"})
