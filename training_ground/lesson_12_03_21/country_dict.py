@@ -9,7 +9,7 @@ def main():
         dell = input('Enter name for dell ')
         name = ''
         for country, capital in country_dict.items():
-            if dell in country or dell in capital:
+            if dell == country or dell == capital:
                 name = country
         if name:
             country_dict.pop(name)
