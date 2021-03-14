@@ -1,2 +1,1 @@
-dic = {[1,2,3]:'df',(4,5,6):'rr'}
-print(dic[[1,2,3]])
+print('Hello word')
