@@ -7,17 +7,16 @@ os.chdir(dname)
 
 
 def files_copy(file_name: str, destination_file_name: str) -> bool:
-    try:
-        with open(file_name, "r") as f:
-            with open(destination_file_name, "w") as f_w:
-                for i in f:
-                    f_w.write(i)
-        return True
-    except:
-        return False
+    # try:
+    with open(file_name, "r+b") as f:
+        with open(destination_file_name, "w+b") as f_w:
+            f_w.write(f.read())
+    return True
+    # except:
+    #     return False
 
 
 if __name__ == "__main__":
-    file_name = 'next_generation.txt'
-    destination_file_name = 'new_generation.txt'
+    file_name = 'Screenshot_3.png'
+    destination_file_name = 'Screenshot_4.png'
     print(files_copy(file_name, destination_file_name))
