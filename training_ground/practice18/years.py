@@ -10,5 +10,5 @@ os.chdir(dname)
 filename = 'next_generation.txt'
 
 with open(filename, "w") as f:
-            for i in range(2000, 2042, 10):
-                f.write(str(i) + "\n")
+            for i in range(2000, 2043):                
+                f.write(str(i) + (" " if i % 10 or i == 2000 else "\n"))

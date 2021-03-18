@@ -2,10 +2,12 @@ def main():
     # I am using the module for the sole purpose of
     # saving the file to the program directory.
     import os
-    # Finding a directory with a script.
-    dir = os.path.abspath(__file__)[:-13]
-    # Create an absolute path to the file.
-    filename = dir + 'diary.txt'
+    # Actualised a directory with a script.
+    abspath = os.path.abspath(__file__)
+    dname = os.path.dirname(abspath)
+    os.chdir(dname)
+    # Create name of file.
+    filename = 'diary.txt'
     # The record distributor, made as a prototype, can
     # be replaced by a more appropriate one.
     sep = '|'
