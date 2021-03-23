@@ -1,33 +1,6 @@
-import os
-# Finding a directory with a script.
-abspath = os.path.abspath(__file__)
-dname = os.path.dirname(abspath)
-os.chdir(dname)
-
-import json
-
-shoping_list_example = [
-{
-    "bread": 1.2,
-    "milk": 1.6,
-    "potato": 0.4,
-    "sunflower oil": 2,
-    "meat": 2.4
-},
-{
-    "bread": 1.2,
-    "milk": 1.6,
-    "potato": 0.4,
-    "sunflower oil": 2,
-    "meat": 2.4,
-    "eggs": 0.4,
-    "fish": 2.4
-}
-]
-with open("shopping_list_ultra.json", "a") as f_json:
-    json.dump(shoping_list_example, f_json)
 
 def to_do_list():
+    import json
     '''
     Key features:
     - The user can add a new task
@@ -38,75 +11,84 @@ def to_do_list():
     unfulfilled tasks and deduce to understand which of
     tasks has what status.
     '''
-    def write_list(task_list: list, filename='shopping_list_ultra.json'):
+    def create_new_shopping_list():
+        shoping_list_example = [
+            {
+                "bread": 1.2,
+                "milk": 1.6,
+                "potato": 0.4,
+                "sunflower oil": 2,
+                "meat": 2.4
+            },
+            {
+                "bread": 1.2,
+                "milk": 1.6,
+                "potato": 0.4,
+                "sunflower oil": 2,
+                "meat": 2.4,
+                "eggs": 0.4,
+                "fish": 2.4
+            }
+        ]
+        with open("shopping_list_ultra.json", "a") as f_json:
+            json.dump(shoping_list_example, f_json)
+        return shoping_list_example
+
+    def write_list(shoping_list: list, filename='shopping_list_ultra.json'):
         """
         Function for write list.
         """
         with open(filename, "w") as f:
-            json.dump(task_list, f)
+            json.dump(shoping_list, f)
 
-    def read_dict(filename='shopping_list_ultra.json') -> list:
+    def read_list(filename='shopping_list_ultra.json') -> list:
         """
         Function for read list.
         File integrity check not implemented, if necessary,
         I can add a checksum. But this is not all today.
         """
-        # try:
-        with open(filename, "r") as f:
-            task_list = json.load(f)
-                
-        # except:
-        #     key = input('The file is damaged. Create a new file? y/n ')
-        #     task_list = [[]]
-        #     if key == 'y':
-        #         write_list(task_list)
-        return task_list
+        try:
+            with open(filename, "r") as f:
+                shoping_list = json.load(f)
+
+        except FileNotFoundError:
+            key = input('The file is damaged. Create a new file? y/n ')
+            if key == 'y':
+                shoping_list = create_new_shopping_list()
+        return shoping_list
+
+    def enter_the_cost():
+        while True:
+            cost = input('Enter the cost of the product: ')
+            try:
+                cost = float(cost)
+                return cost
+            except ValueError:
+                print('You made mistake')
 
     def add_a_new_task():
-        task = input('\nEnter new name food: ')
-        count = input('Enter prie food ')
-        
-        task_list.append(["unfulfilled", task])
-        print('Task added')
+        key = 'y'
+        list_of_products = {}
+        while key == 'y':
+            task = input('\nEnter the product name: ')
+            cost = enter_the_cost()
+            list_of_products[task] = cost
+            print('Produkt added')
+            key = input('Add enother produkt? y/n ')
 
-    def edit_the_task():
-        num = input('Enter a number of task for editng ')
+        shoping_list.append(list_of_products)
+        print('List added')
+
+    def delete_the_list():
+        num = input('\nEnter a number of list for deleting ')
         if num.isdigit():
             num = int(num) - 1
-            if 0 <= num < len(task_list):
-                print('You are editing task: {}'.format(task_list[num][1]))
-                task_list[num][1] = input('Enter an editing task: ')
-                print('Task edited')
-            else:
-                print('You made mistake')
-        else:
-            print('You made mistake')
-
-    def delete_the_task():
-        num = input('\nEnter a number of task for deleting ')
-        if num.isdigit():
-            num = int(num) - 1
-            if 0 <= num < len(task_list):
+            if 0 <= num < len(shoping_list):
                 key = input(
-                    'Are you sure deleted task: {} ? y/n'.format(task_list[num][1]))
+                    'Are you sure deleted list: {} ? y/n '.format(shoping_list[num]))
                 if key == 'y':
-                    del task_list[num]
-                    print('Task deleted')
-            else:
-                print('You made mistake')
-        else:
-            print('You made mistake')
-
-    def mark_the_task_as_completed():
-        num = input('\nEnter a number of task for mark ')
-        if num.isdigit():
-            num = int(num) - 1
-            if 0 <= num < len(task_list):
-                if task_list[num][0] == "unfulfilled":
-                    task_list[num][0] = "completed"
-                else:
-                    task_list[num][0] = "unfulfilled"
-                print('Task marked')
+                    del shoping_list[num]
+                    print('List deleted')
             else:
                 print('You made mistake')
         else:
@@ -114,33 +96,53 @@ def to_do_list():
 
     def view_the_list():
         print('\nYour tasks:')
-        for n, [i, j] in enumerate(task_list):
-            print(n + 1, i, j)
+        for n, i in enumerate(shoping_list):
+            print('\n{} list:'.format(n + 1))
+            for j in i:
+                print(j, shoping_list[n][j])
+
+    def vew_expencive_list(chipest=False):
+        indicator = ["most expensive","chipest"][chipest]
+        print('\nThe {} list of products:'.format(indicator))
+        prices = []
+        for n, i in enumerate(shoping_list):
+            price = 0
+            for j in i:
+                price += shoping_list[n][j]
+            prices.append((n, price))
+        prices.sort(key=lambda x: x[1])
+        n = prices[0 - chipest][0]
+        print('\n{} list the {}:'.format(n + 1, indicator))
+        for j in shoping_list[n]:
+            print(j, shoping_list[n][j])
+
+    def vew_cheapest_list():
+        vew_expencive_list(chipest=True)
 
     def good_by():
         print('Good by! See you later!')
-        write_list(task_list)
+        write_list(shoping_list)
 
-    task_list = read_dict()
-    print(task_list)
+    shoping_list = read_list()
+    print(shoping_list)
 
     box = {
         "a": add_a_new_task,
-        "e": edit_the_task,
-        "d": delete_the_task,
-        "m": mark_the_task_as_completed,
+        "d": delete_the_list,
         "v": view_the_list,
+        "e": vew_expencive_list,
+        "c": vew_cheapest_list,
         "exit": good_by,
     }
 
     key = ''
     while key != 'exit':
-        print("\nHello I'm your To Do list")
-        print("Enter A for add a new task")
-        print("Enter E for edit the task")
-        print("Enter D for delete the task")
-        print("Enter M for mark/unmark the task as completed")
-        print("Enter F for view the list")
+        print("\nHello I'm your shoping list")
+        print("Enter A for add a new list")
+        print("Enter D for delete the list")
+        print("Enter V for view the list")
+        print("Enter E for view the most expensive list of products")
+        print("Enter C for view the cheapest list of products")
         print("Enter EXIT for exit")
         key = input("Make your choice: ").lower()
         if key in box:

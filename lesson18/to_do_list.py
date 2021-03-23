@@ -94,7 +94,6 @@ def to_do_list():
         write_list(task_list)
 
     task_list = read_dict()
-    print(task_list)
 
     box = {
         "a": add_a_new_task,
@@ -112,7 +111,7 @@ def to_do_list():
         print("Enter E for edit the task")
         print("Enter D for delete the task")
         print("Enter M for mark/unmark the task as completed")
-        print("Enter F for view the list")
+        print("Enter V for view the list")
         print("Enter EXIT for exit")
         key = input("Make your choice: ").lower()
         if key in box:
