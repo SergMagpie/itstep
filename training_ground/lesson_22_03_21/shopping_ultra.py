@@ -1,15 +1,11 @@
 
-def to_do_list():
+def shoppind_list():
     import json
     '''
-    Key features:
-    - The user can add a new task
-    - the user can edit the task
-    - the user can delete the task
-    - the user can mark the task as completed
-    - the user can view the list of completed and
-    unfulfilled tasks and deduce to understand which of
-    tasks has what status.
+    Pprovide the ability to add new lists, 
+    delete existing ones, find the most expensive and cheapest shopping list,
+    read data on the first login from the file (where the data is serialized) 
+    and after completion serialize and save to a file
     '''
     def create_new_shopping_list():
         shoping_list_example = [
@@ -102,7 +98,7 @@ def to_do_list():
                 print(j, shoping_list[n][j])
 
     def vew_expencive_list(chipest=False):
-        indicator = ["most expensive","chipest"][chipest]
+        indicator = ["most expensive", "chipest"][chipest]
         print('\nThe {} list of products:'.format(indicator))
         prices = []
         for n, i in enumerate(shoping_list):
@@ -157,4 +153,4 @@ if __name__ == "__main__":
     abspath = os.path.abspath(__file__)
     dname = os.path.dirname(abspath)
     os.chdir(dname)
-    to_do_list()
+    shoppind_lists()
