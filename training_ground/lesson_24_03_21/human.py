@@ -31,3 +31,5 @@ class Human():
 
 vasa = Human('Vasya', "Ivanovich")
 vasa.greetings()
+vasa.set_phone_number("0380636453524")
+vasa.contact_info()
