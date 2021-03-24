@@ -40,8 +40,6 @@ def shopping_list():
     def read_list(filename='shopping_list_ultra.json') -> list:
         """
         Function for read list.
-        File integrity check not implemented, if necessary,
-        I can add a checksum. But this is not all today.
         """
         try:
             with open(filename, "r") as f:
@@ -51,6 +49,8 @@ def shopping_list():
             key = input('The file is damaged. Create a new file? y/n ')
             if key == 'y':
                 shopping_list = create_new_shopping_list()
+            else:
+                shopping_list = []
         return shopping_list
 
     def enter_the_cost():
@@ -131,7 +131,6 @@ def shopping_list():
         write_list(shopping_list)
 
     shopping_list = read_list()
-    print(shopping_list)
 
     box = {
         "a": add_a_new_task,
