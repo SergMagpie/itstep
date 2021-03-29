@@ -13,25 +13,25 @@ class Car():
         self.car_color = car_color
         self.price = price
 
-    def get_model_name(self):
+    def get_model_name(self) -> str:
         return self.model_name
 
-    def get_year_of_manufacture(self):
+    def get_year_of_manufacture(self) -> str:
         return self.year_of_manufacture
 
-    def get_manufacturer(self):
+    def get_manufacturer(self) -> str:
         return self.manufacturer
 
-    def get_engine_capacity(self):
+    def get_engine_capacity(self) -> str:
         return self.engine_capacity
 
-    def get_car_color(self):
+    def get_car_color(self) -> str:
         return self.car_color
 
-    def get_price(self):
+    def get_price(self) -> str:
         return self.price
 
-    def show_car_characteristics(self):
+    def show_car_characteristics(self) -> None:
         print(self.get_model_name(),
               self.get_year_of_manufacture(),
               self.get_manufacturer(),
