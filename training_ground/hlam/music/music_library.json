@@ -1,1 +1,31 @@
-[{"name of group": ["gfdb", "gf"], "participants": ["tgs"], "year of foundation": ["gdb"], "albums": ["hbgdf"]}, {"name of group": ["hdfn"], "participants": ["cvn"], "year of foundation": ["23"], "albums": ["cvn"]}]
+[
+    {
+        "name of group": [
+            "gfdb",
+            "gf"
+        ],
+        "participants": [
+            "tgs"
+        ],
+        "year of foundation": [
+            "gdb"
+        ],
+        "albums": [
+            "hbgdf"
+        ]
+    },
+    {
+        "name of group": [
+            "hdfn"
+        ],
+        "participants": [
+            "cvn"
+        ],
+        "year of foundation": [
+            "23"
+        ],
+        "albums": [
+            "cvn"
+        ]
+    }
+]

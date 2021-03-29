@@ -47,7 +47,7 @@ def write_list(list_of_records: list, filename='music_library.json'):
     Function for write list.
     """
     with open(filename, "w") as f:
-        json.dump(list_of_records, f)
+        json.dump(list_of_records, f, indent=4)
 
 
 def read_list(filename='music_library.json') -> list:
@@ -67,6 +67,23 @@ def read_list(filename='music_library.json') -> list:
 '''
 
 add / change / delete
+Уточнить:
+1. В завданні написано: альбомів можу бути декілька, учасників декілька
+тому питання, чи критично, що буде можливість записати декілька 
+назв чи років випуску? Чи обмежити таку можливість?
+2. В завданні написано: Програма має також давати змогу,
+додавати/змінювати/видаляти виконавця та альбоми в
+ньому. Питання: при внесенні змін до виконавця, змінюється і поле альбом.
+Чи потрібне окреме меню на редагування альбомів? Якщо "так", то чи потрібно таке ж меню
+для редагування учасинків?
+3. Чи потрібно на гітхабі використовувати гілки, чи можна просто зробити 
+проект на 2х файлах в одному репозиторії?
+
+Зауваження з домашньої: "В хрестиках ноликах оформлення досить масивне" - за оформлення відповідають 
+окремі функції - bottom, left, right. За бажанням їх можна відключити взагалі, 
+або намалювати свій логотип. Був настрій, був час, таку фічу запіндючив, 
+з метою тренування. Якщо це зайве, то більше не буду. Проте, було зауваження про те, 
+що мої програми замало спілкуються з людиною, ось я і пробую надолужити.
 '''
 
 
@@ -102,7 +119,7 @@ def del_record():
         number = int(number) - 1
         if 0 <= number < len(list_of_records):
             if func_music_library.delete(
-                    ' '.join(list_of_records[number]["name of group"])):
+                    ', '.join(list_of_records[number]["name of group"])):
                 del list_of_records[number]
         else:
             print('You made mistake')
@@ -127,8 +144,6 @@ def good_by():
 
 
 list_of_records = read_list()
-
-print(list_of_records)
 
 box = {
     "a": add_record,
