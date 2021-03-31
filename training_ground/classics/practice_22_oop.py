@@ -2,12 +2,13 @@ class CloneTrooper():
 
     def __init__(self, id):
         self._identificator = id
+        self.name = 'CT-' + id
 
     def fight(self):
-        print("I am CloneTrooper", self._identificator, 'started fight')
+        print("I am CloneTrooper", self.name, 'started fight')
 
     def say_name(self):
-        print("I am CloneTrooper", self._identificator)
+        print("I am CloneTrooper", self.name)
 
     def __eq__(self, other):
         '''
@@ -26,7 +27,6 @@ class CloneTrooper():
             return True
         else:
             return False
-
 
     def __lt__(self, other):
         '''
@@ -65,20 +65,19 @@ class CloneTrooper():
             return False
 
     def __str__(self):
-        return "I'm" + self._identificator
+        return "I'm " + self.name
 
-        
 
 class StormTrooper(CloneTrooper):
     def __init__(self, id):
         super().__init__(id)
-        self._identificator = id
+        self.name = 'ST-' + id
 
     def fight(self):
         print("I am CloneTrooper", "ST-" + self._identificator, 'started fight')
 
     def say_name(self):
-        print("I am CloneTrooper", "ST-" + self._identificator)     
+        print("I am CloneTrooper", "ST-" + self._identificator)
 
     def type(self):
         print('Trooper type -> StormTrooper', self._identificator)
