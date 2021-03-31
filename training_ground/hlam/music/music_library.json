@@ -1,31 +1,46 @@
 [
     {
         "name of group": [
-            "gfdb",
-            "gf"
+            "Abba"
         ],
         "participants": [
-            "tgs"
+            "Benny Andersson",
+            "Anni-Frid Lyngstad",
+            "Agnetha F\u00e4ltskog",
+            "Bj\u00f6rn Ulvaeus"
         ],
         "year of foundation": [
-            "gdb"
+            "1972"
         ],
         "albums": [
-            "hbgdf"
+            "Ring Ring",
+            "Waterloo",
+            "ABBA",
+            "Arrival",
+            "The Album",
+            "Voulez-Vous",
+            "Super Trouper",
+            "The Visitors"
         ]
     },
     {
         "name of group": [
-            "hdfn"
+            "Queen"
         ],
         "participants": [
-            "cvn"
+            "Freddie Mercury",
+            "Brian May",
+            "Roger Taylor",
+            "John Deacon"
         ],
         "year of foundation": [
-            "23"
+            "1973"
         ],
         "albums": [
-            "cvn"
+            "Brooks",
+            "Dawson",
+            "Dean",
+            "Goodall"
         ]
     }
 ]
