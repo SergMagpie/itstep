@@ -1,22 +1,87 @@
 class CloneTrooper():
 
     def __init__(self, id):
-        self.__id = id
+        self._identificator = id
 
     def fight(self):
-        print("I am CloneTrooper", self.__id, 'started fight')
+        print("I am CloneTrooper", self._identificator, 'started fight')
 
     def say_name(self):
-        print("I am CloneTrooper", self.__id)
+        print("I am CloneTrooper", self._identificator)
 
+    def __eq__(self, other):
+        '''
+        Определяет поведение оператора равенства, ==.
+        '''
+        if self._identificator == other._identificator:
+            return True
+        else:
+            return False
+
+    def __ne__(self, other):
+        '''
+        Определяет поведение оператора неравенства, !=.
+        '''
+        if self._identificator != other._identificator:
+            return True
+        else:
+            return False
+
+
+    def __lt__(self, other):
+        '''
+        Определяет поведение оператора меньше, < .
+        '''
+        if self._identificator < other._identificator:
+            return True
+        else:
+            return False
+
+    def __gt__(self, other):
+        '''
+        Определяет поведение оператора больше, > .
+        '''
+        if self._identificator > other._identificator:
+            return True
+        else:
+            return False
+
+    def __le__(self, other):
+        '''
+        Определяет поведение оператора меньше или равно, <= .
+        '''
+        if self._identificator <= other._identificator:
+            return True
+        else:
+            return False
+
+    def __ge__(self, other):
+        '''
+        Определяет поведение оператора больше или равно, >= .:
+        '''
+        if self._identificator >= other._identificator:
+            return True
+        else:
+            return False
+
+    def __str__(self):
+        return "I'm" + self._identificator
+
+        
 
 class StormTrooper(CloneTrooper):
     def __init__(self, id):
         super().__init__(id)
-        self.__id = "ST-" + id
+        self._identificator = id
+
+    def fight(self):
+        print("I am CloneTrooper", "ST-" + self._identificator, 'started fight')
+
+    def say_name(self):
+        print("I am CloneTrooper", "ST-" + self._identificator)     
 
     def type(self):
-        print('Trooper type -> StormTrooper', self.__id)
+        print('Trooper type -> StormTrooper', self._identificator)
 
 
 if __name__ == "__main__":
@@ -31,3 +96,6 @@ if __name__ == "__main__":
     [i.fight() for i in stek2]
     [i.say_name() for i in stek2]
     [i.type() for i in stek2]
+    for i in stek:
+        for j in stek2:
+            print(i, '==', j, i == j)
