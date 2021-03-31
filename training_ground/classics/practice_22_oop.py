@@ -79,8 +79,9 @@ class StormTrooper(CloneTrooper):
     def say_name(self):
         print("I am CloneTrooper", "ST-" + self._identificator)
 
-    def type(self):
-        print('Trooper type -> StormTrooper', self._identificator)
+    @staticmethod
+    def type():
+        print('Trooper type -> StormTrooper')
 
 
 if __name__ == "__main__":
