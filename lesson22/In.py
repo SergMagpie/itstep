@@ -9,7 +9,7 @@ class In():
     game_folder = os.path.dirname(__file__)
     img_folder = os.path.join(game_folder, 'res')
 
-    # Цвета (R, G, B)
+    # Colors (R, G, B)
     BLACK = (0, 0, 0)
     WHITE = (255, 255, 255)
     RED = (255, 0, 0)
@@ -17,18 +17,18 @@ class In():
     BLUE = (0, 0, 255)
     YELLOW = (255, 255, 0)
 
-    WIDTH = 800  # ширина игрового окна
-    HEIGHT = 600  # высота игрового окна
-    FPS = 30  # частота кадров в секунду
+    WIDTH = 800  # game window width
+    HEIGHT = 600  # game window height
+    FPS = 30  # frame rate per second
 
-    # создаем игру и окно
+    # create a game and a window
     pygame.init()
-    pygame.mixer.init()  # для звука
+    pygame.mixer.init()  # for sound
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Star Ship Destroyer")
     clock = pygame.time.Clock()
     all_sprites = pygame.sprite.Group()
-    # грузим звук
+    # loading sound
     shoot_sound = pygame.mixer.Sound(os.path.join(img_folder, 'pew.wav'))
     pygame.mixer.music.load(os.path.join(
         img_folder, 'tgfcoder-FrozenJam-SeamlessLoop.ogg'))
@@ -56,7 +56,6 @@ class In():
         pygame.draw.rect(surf, In.WHITE, outline_rect, 2)
 
     def show_go_screen():
-        # In.screen.blit(background, background_rect)
         In.draw_text(
             In.screen,
             "Greetings, O warrior!",
