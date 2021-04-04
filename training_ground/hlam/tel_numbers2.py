@@ -1,5 +1,5 @@
 def dig_dic(vocab):
-    print('dic_dig')
+    # print('dic_dig')
     num_lit={'i':1,'j':1,'a':2,'b':2,'c':2,'d':3,'e':3,'f':3,'g':4,'h':4,
              'k':5,'l':5,'m':6,'n':6,'p':7,'r':7,'s':7,'t':8,'u':8,'v':8,
              'w':9,'x':9,'y':9,'o':0,'q':0,'z':0}
@@ -9,11 +9,11 @@ def dig_dic(vocab):
     return dic
 
 def finder(number,dic,way=[]):
-    print('finder')
+    # print('finder')
     ways=[];    way_ = ''.join(way)
     list_dic=[i for i in [k for k in dic if k in number[len(way_):]]
               if number[len(way_):].find(i) == 0]
-    print(list_dic)
+    # print(list_dic)
     for i in list_dic:
         if i == number[len(way_):]:
             return True, way+[i]
@@ -29,10 +29,10 @@ import time
 start_time = time.time()
 
 from sys import stdin
-#in_dates=stdin.read().split()
 def load_dates():
-    print('load_dates')
-    in_dates=open('dates.txt', 'r').read().split(sep='\n')
+    # in_dates=stdin.read().split()
+    # print('load_dates')
+    in_dates=open('./training_ground/hlam/dates.txt', 'r').read().split(sep='\n')
     list_tasks=[]; i=0
     while in_dates[i] != '-1':
         num = in_dates[i];
@@ -43,10 +43,11 @@ def load_dates():
     return list_tasks
 
 for number, vocab in load_dates():
-    flag, result=finder(number,dig_dic(vocab).keys())
+    dic = dig_dic(vocab)
+    flag, result=finder(number, dic)
     if flag == False:
         m=['No solution.']
     else:
-        m=list(map(lambda i:dig_dic(vocab)[i],result))
+        m=list(map(lambda i:dic[i],result))
     print(*m)
 print("--- %s seconds ---" % (time.time() - start_time))
