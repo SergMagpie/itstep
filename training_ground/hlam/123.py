@@ -1,47 +1,31 @@
-from tkinter import *
-from tkinter.ttk import Radiobutton  
 import random
-from tkinter.ttk import Combobox 
+KeyList = ['1:00', '2:00', '3:00', '4:00', '5:00',
+           '6:00', '7:00', '8:00', '9:00', '10:00',
+           '11:00', '12:00', '13:00', '14:00', '15:00',
+           '16:00', '17:00', '18:00', '19:00', '20:00',
+           '21:00', '22:00', '23:00', '24:00']
+# словарь для записи в значение играл/не играл(0 - не играл, 1 - играл)
+time = {}
+for i in KeyList:
+    time[i] = random.randint(0, 1)
 
-  
-a = ['Выпей кофе','Поговорить с близкими!','Отдохни сегодня','Хорошо бы тебе прогуляться','Напиши друзьям','Покушай здоровой еды','Сделай разминку']
-def clicked():
-    lbl.configure(text=random.choice(a))
-def angr():  
-    res = "Привет {}, вот твое предсказание".format(txt.get())  
-    lbl.configure(text=res)   
+print(time)
 
-window = Tk()  
-window.title('Добро пожаловать в приложение "ПеЧеНьКи"')  
-window.geometry('1400x1250')  
-selected = IntVar() 
-txt = Entry(window,width=10)  
-txt.grid(column=10, row=0)
-lbl1 = Label(window, text="Введите свой возраст:")  
-lbl1.grid(column=18, row=0)
-# lbl2.grid(column=20, row=0)   
-rad1 = Radiobutton(window,text='Понедельник', value=1, variable=selected)  
-rad2 = Radiobutton(window,text='Вторник', value=2, variable=selected)  
-rad3 = Radiobutton(window,text='Среда', value=3, variable=selected)
-rad4 = Radiobutton(window,text='Четверг', value=4, variable=selected)  
-rad5 = Radiobutton(window,text='Пятница', value=5, variable=selected)  
-rad6 = Radiobutton(window,text='Суббота', value=6, variable=selected)
-rad7 = Radiobutton(window,text='Воскресенье', value=7, variable=selected)  
-btn = Button(window, text="За печенькой!", command=clicked, bg="black", fg="yellow") 
-angr1 = Button(window, text="Я ввёл имя!", command=angr ,bg="black", fg="yellow")  
-lbl = Label(window)  
-rad1.grid(column=0, row=0)  
-rad2.grid(column=1, row=0)  
-rad3.grid(column=2, row=0)
-rad4.grid(column=3, row=0)  
-rad5.grid(column=4, row=0)  
-rad6.grid(column=5, row=0)
-rad7.grid(column=6, row=0)  
-btn.grid(column=3, row=3)  
-lbl.grid(column=0, row=1)
-angr1.grid(column=13, row=0)
-combo = Combobox(window)  
-combo['values'] = ('1-5','6-10','11-15','16-20','21-25','26-35','36-50','>50','конфиденциальная информация')  
-# combo.current('конфиденциальная информация')  
-combo.grid(column=20, row=0)  
-window.mainloop() 
+# перенос значений в список, чтобы сравнить два списка
+values = []
+for v in time.values():
+    values.append(v)
+print(KeyList)
+print(values)
+
+# собственно, решение задачи
+count = 0
+max_item = 0
+for i in time.values():
+    if i:
+        count += 1
+    else:
+        count = 0
+    if count > max_item:
+        max_item = count
+print(max_item)
