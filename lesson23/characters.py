@@ -2,7 +2,7 @@ class Army:
     pass
 
 
-class OrcArmy:
+class OrcArmy(Army):
     def __init__(self, warior_amount, damage_per_orc, warrior_health) -> None:
         self.warior_amount = warior_amount
         self.damage_per_orc = damage_per_orc
@@ -45,7 +45,7 @@ class OrcArmy:
         self.warior_amount = self.warior_amount - damage // self.warrior_health
 
 
-class ElfArmy:
+class ElfArmy(Army):
     def __init__(self, warior_amount, damage_per_orc, warrior_health, shield) -> None:
         self.warior_amount = warior_amount
         self.damage_per_orc = damage_per_orc
@@ -94,7 +94,3 @@ class ElfArmy:
     def receive_damage(self, damage: int):
         self.warior_amount = self.warior_amount - \
             damage // (self.warrior_health + self.shield)
-
-
-if __name__ == "__main__":
-    pass
