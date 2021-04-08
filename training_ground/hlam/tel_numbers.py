@@ -37,22 +37,25 @@ while next_try:
 
     print(*array, sep='\n')
 
-    vertex = [(10000000, -1, -1)] * (len_phone_num + 1)
-    stack = []
-    stack.append(0)
-    vertex[0] = (0, 0, 0)
-    while stack:
-        top = stack.pop()
-        ver = vertex[top]
-        new_weight = ver[0] + 1
+    vertex = [(10000000, -1, -1)] * (len_phone_num + 1) 
+    stack = [] # изначально список посещённых узлов пуст
+    stack.append(0) # начиная с узла-источника
+    vertex[0] = (0, 0, 0) 
+    while stack: # пока очередь не пуста
+        print('stack', *stack)
+        top = stack.pop() # извлечь элемент в очереди
+        ver = vertex[top] # [10000000, -1, -1]
+        new_weight = ver[0] + 1 # номер слова в очереди
+        print('top', top, 'ver', ver, 'new_weight', new_weight)
         for j in range(top + 1, len_phone_num + 1):
-            k = array[top][j]
-            if k > -1:
-                v = vertex[j]
+            k = array[top][j] # бежим по строкам таблицы
+            if k > -1: # если есть значение в таблице на j-той позиции
+                v = vertex[j] # берем узел из списка
                 if v[0] > new_weight:
-                    if v[1] == -1:
-                        stack.append(j)
-                    vertex[j] = (new_weight, top, k)
+                    if v[1] == -1: # проверяем, посещали ли его, если нет, 
+                        stack.append(j) # добавляем в очередь позицию элемента
+                    vertex[j] = (new_weight, top, k) # обновляем список узлов
+                    print(j, new_weight, top, k)
     print(*vertex, sep='\n')
 
     rver = vertex[len_phone_num]
