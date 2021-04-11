@@ -1,4 +1,4 @@
-from characters import *
+from army import *
 
 a1 = OrcArmy(100, 50, 80)
 a2 = OrcArmy(200, 100, 160)
