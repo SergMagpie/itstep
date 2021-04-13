@@ -16,3 +16,5 @@ if __name__ == "__main__":
     
     a = Auto()
     print(dir(a))
+    a.model = 'Audi'
+    print(dir(a))
