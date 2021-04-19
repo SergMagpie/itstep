@@ -19,9 +19,6 @@ class Basket:
     def __iter__(self):
         return iter((i.product_name, i.cost) for i in self.roster)
 
-
-    # def __next__(self):
-        # 	return
 if __name__ == "__main__":
     package = Basket()
     package.add_prod('Rice', 50)
@@ -30,5 +27,11 @@ if __name__ == "__main__":
     package.add_prod('Bread', 30)
     print(package.total_price())
     print(package.total_quantity())
+    i = iter(package)
+    print(next(i))
+    print(next(i))
+    print(next(i))
+    
+    print()
     for i in package:
         print(i)
