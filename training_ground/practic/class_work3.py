@@ -1,3 +1,4 @@
+from time import time
 from threading import Thread
 import os
 # Actualised a directory with a script.
@@ -30,9 +31,13 @@ if __name__ == "__main__":
     path = input_path_to_file('first')
     path2 = input_path_to_file('second')
     word = input('Enter word for find ')
-
+    time1 = time()
     t1 = Thread(target=find_word_in_file, args=(path, word))
     t2 = Thread(target=find_word_in_file, args=(path2, word))
 
     t1.start()
     t2.start()
+    t1.join()
+    t2.join()
+    time2 = time()
+    print(time1 - time2)
