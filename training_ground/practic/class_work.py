@@ -44,6 +44,7 @@ if __name__ == "__main__":
             t2.start()
             t3.start()
 
+
             print(*list_of_nums)
         elif num == 'exit':
             print('Goodbye!')
