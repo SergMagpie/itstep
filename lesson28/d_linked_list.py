@@ -100,6 +100,7 @@ class DLinkedList:
                 return True
             node = node.next
             count += 1
+        return False
 
     def show_neighbors(self, position):
         node = self.head
