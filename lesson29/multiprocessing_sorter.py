@@ -1,6 +1,6 @@
-# multi-threaded sorter MTS-1 by SergMagpie
+# multiprocessing sorter MTS-1 by SergMagpie
 from time import time
-from threading import Thread
+from multiprocessing import Process
 import os
 import random
 import json
@@ -11,7 +11,7 @@ os.chdir(dname)
 
 
 def create_file_of_numbers(quantity=10000,
-                           filename='random_numbers.json') -> str:
+                           filename='random_numbers2.json') -> str:
     """
     created new file of numbers and return name of file
     """
@@ -71,16 +71,16 @@ if __name__ == "__main__":
             break
     if input("Start sorting? y/n ") == 'y':
         time_ch = time()
-        t1 = Thread(target=splitting_the_file_with_numbers,
+        p1 = Process(target=splitting_the_file_with_numbers,
                     args=(filename, 'positive'))
-        t1.start()
+        p1.start()
         print("Creating a file with positive numbers started!")
-        t2 = Thread(target=splitting_the_file_with_numbers,
+        p2 = Process(target=splitting_the_file_with_numbers,
                     args=(filename, 'negative'))
-        t2.start()
+        p2.start()
         print("Creating a file with negative numbers started!")
-        t1.join()
-        t2.join()
+        p1.join()
+        p2.join()
         time2 = time()
         print(f"\nTotal execution time {time2 - time_ch}")
 
