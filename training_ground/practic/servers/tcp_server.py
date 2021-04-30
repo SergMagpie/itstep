@@ -1,9 +1,9 @@
-import socket
+import socket, os
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.bind(('', 8888))
+sock.bind(('0.0.0.0', 8888))
 sock.listen(5)
-
+os.environ.get('PORT')
 while True:
     try:
         client, addr = sock.accept()
