@@ -1,0 +1,2 @@
+heroku ps:scale web=0 - changing the number of dynos that are running
+heroku open - open heroku in the browser
