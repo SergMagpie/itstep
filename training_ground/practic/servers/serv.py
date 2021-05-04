@@ -1,6 +1,5 @@
-from socketserver import BaseRequestHandler, TCPServer
+from socketserver import BaseRequestHandler
 from socketserver import ThreadingTCPServer
-import socket
 
 
 class EchoHandler(BaseRequestHandler):
@@ -17,5 +16,5 @@ class EchoHandler(BaseRequestHandler):
 
 
 if __name__ == '__main__':
-    server = ThreadingTCPServer((socket.gethostname(), 5000), EchoHandler)
+    server = ThreadingTCPServer(('127.0.0.1', 8888), EchoHandler)
     server.serve_forever()
