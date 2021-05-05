@@ -19,13 +19,13 @@ class TicTacClient:
     '''
 
     def processing_request(self, data):
-        if data != b'null':
+        if data != b'null' and data:
             print('text', data)
             text = data.decode('utf-8')
             dic = json.loads(text)
-            print('message', dic['message'])
+            print(dic['message'])
             if dic['action'] == 'step':
-                message = input('Input step or exit for exit ')
+                message = input('Input ')
                 if message == 'exit':
                     self.game = False
                 dic['message'] = message
@@ -56,8 +56,10 @@ class TicTacClient:
                 # Look for the response
                 try:
                     text = self.processing_request(sock.recv(4096))
-                except KeyboardInterrupt:
+                except (ConnectionResetError, KeyboardInterrupt,
+                        ConnectionAbortedError):
                     sock.close()
+                    print('Server disconnected\nGoodbye!')
                     sys.exit(0)
                 print(text)
                 sock.sendall(text)
