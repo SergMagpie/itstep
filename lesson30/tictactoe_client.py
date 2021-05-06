@@ -15,17 +15,18 @@ class TicTacClient:
     'registration'
     'opponent_s_choice'
     'step'
-    'message'
+    'end_of_game'
     '''
 
     def processing_request(self, data):
         if data != b'null' and data:
-            print('text', data)
+            # print('text', data)
             text = data.decode('utf-8')
             dic = json.loads(text)
             print(dic['message'])
             if dic['action'] == 'step':
                 message = input('Input ')
+                print('Please, wait.')
                 if message == 'exit':
                     self.game = False
                 dic['message'] = message
@@ -61,8 +62,13 @@ class TicTacClient:
                     sock.close()
                     print('Server disconnected\nGoodbye!')
                     sys.exit(0)
-                print(text)
-                sock.sendall(text)
+                # print(text)
+                try:
+                    sock.sendall(text)
+                except ConnectionAbortedError:
+                    sock.close()
+                    print('Server disconnected\nGoodbye!')
+                    sys.exit(0)
             sock.close()
 
 

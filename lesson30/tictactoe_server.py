@@ -42,18 +42,18 @@ class Game:
         return f"\n{string1}\n{string2}\n{string3}"
 
     def end(self) -> bool:
-        comb = ((1,2,3),(4,5,6),(7,8,9),
-                (1,5,9),(7,5,3),
-                (1,4,7),(2,5,8),(3,6,9))
+        comb = ({1,2,3},{4,5,6},{7,8,9},
+                {1,5,9},{7,5,3},
+                {1,4,7},{2,5,8},{3,6,9})
         game_state_total = [(n + 1, i) for n, i in enumerate(self.playground)]
-        cross_list = tuple(n for n, i in game_state_total if i == 'X')
-        zero_list = tuple(n for n, i in game_state_total if i == 'O')
+        cross_list = set(n for n, i in game_state_total if i == 'X')
+        zero_list = set(n for n, i in game_state_total if i == 'O')
         ability_to_move = [i for i in self.playground if i.isdigit()]
         for i in comb:
-            if i in cross_list:
+            if i.issubset(cross_list):
                 self.winner = self.playerX
                 return True
-            elif i in zero_list:
+            elif i.issubset(zero_list):
                 self.winner = self.playerO
                 return True
         if not ability_to_move:
@@ -73,7 +73,8 @@ class Player:
         pass
 
     def delete(self):
-        self.opponent.opponent = None
+        if self.opponent:
+            self.opponent.opponent = None
         Player.player_list.remove(self)
 
     def registration(self, dic):
@@ -111,23 +112,26 @@ class Player:
         message = dic['message']
         if self.opponent:
             print(message)
+            rem = 'Your move '
             if self.round.whose_move(self):
                 rem = self.round.move(self, message)
             trying = 15 # settimeout
             while not self.round.whose_move(self) and trying:  # the second player expects
                 trying -= 1
                 if self.opponent:  # if an opponent exists
+                    print('sleep', self.name, self.opponent, self.opponent.name)
                     sleep(2)
-                    rem = 'Your move '
                 else:
                     break
             if self.round.end():
                 if self.round.winner:
-                    dic['message'] = self.round.winner.name + 'win!'
-                    dic['action'] = 'opponent_s_choice'
-                    if self.opponent:
-                        self.opponent.opponent = None
-                    self.opponent = None
+                    dic['message'] = 'Player ' + self.round.winner.name + ' win!'
+                else:
+                    dic['message'] = 'The game of chess ended in a draw'
+                dic['action'] = 'end_of_game'
+                if self.opponent:
+                    self.opponent.opponent = None
+                self.opponent = None
             else:
                 dic['message'] = rem + \
                     self.round.show_playground() + \
@@ -139,9 +143,13 @@ class Player:
             #     return None
             pass
         else:
-            dic['message'] = 'You win!'
+            dic['message'] = 'Your opponent disconnected!\nYou win!'
             dic['action'] = 'opponent_s_choice'
         return dic
+
+    def end_of_game(self, data):
+        print('end of game', self.name, data)
+        pass
 
     def processing_request(self, data):
         if data:
@@ -152,6 +160,7 @@ class Player:
                 'registration': self.registration,
                 'opponent_s_choice': self.opponent_s_choice,
                 'step': self.step,
+                'end_of_game': self.end_of_game
             }
             dic = actions[dic['action']](dic)
             return str.encode(json.dumps(dic))
@@ -162,8 +171,10 @@ class EchoHandler(BaseRequestHandler):
     def handle(self):
         print('New connection from:', self.client_address)
         self.player = Player()  # creating a new player
-        self.request.settimeout(30)
-        while True:
+        # print('Server ', self, dir(self), self.__dict__)
+        # self.request.settimeout(30)
+        self.game = True
+        while self.player:
             try:
                 msg = self.player.processing_request(self.request.recv(4096))
             except ConnectionAbortedError:
