@@ -24,16 +24,25 @@ class TicTacClient:
             text = data.decode('utf-8')
             dic = json.loads(text)
             print(dic['message'])
+            if dic['action'] == 'end_of_game':
+                self.game = False
             if dic['action'] == 'step':
                 message = input('Input ')
                 print('Please, wait.')
                 if message == 'exit':
                     self.game = False
+                    dic['action'] == 'end_of_game'
                 dic['message'] = message
             return str.encode(json.dumps(dic))
         else:
             print('Goodbye')
             self.game = False
+            dic = {
+                'name': self.name,
+                'action': 'end_of_game',
+                'message': ''
+            }
+            return str.encode(json.dumps(dic))
 
     def registration_message(self):
         dic = {
@@ -58,17 +67,15 @@ class TicTacClient:
                 try:
                     text = self.processing_request(sock.recv(4096))
                 except (ConnectionResetError, KeyboardInterrupt,
-                        ConnectionAbortedError):
+                        ConnectionAbortedError, OSError):
                     sock.close()
                     print('Server disconnected\nGoodbye!')
-                    sys.exit(0)
                 # print(text)
                 try:
                     sock.sendall(text)
-                except ConnectionAbortedError:
+                except (ConnectionAbortedError, OSError):
                     sock.close()
                     print('Server disconnected\nGoodbye!')
-                    sys.exit(0)
             sock.close()
 
 
@@ -76,5 +83,8 @@ if __name__ == "__main__":
 
     print("Hello!")
     player_name = input("Enter your name, please ")
-    player = TicTacClient(player_name)
-    player.run_game()
+    answ = 'y'
+    while answ == 'y':
+        player = TicTacClient(player_name)
+        player.run_game()
+        answ = input('Will play again? y/n ')

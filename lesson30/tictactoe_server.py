@@ -33,7 +33,10 @@ class Game:
             self.step += 1
             return 'Step ' + str(self.step)
         else:
-            return 'You made a mistake'            
+            if self.step == 1:
+                return 'Your move'
+            else:
+                return 'You made a mistake'
 
     def show_playground(self):
         string1 = self.playground[6:9]
@@ -42,9 +45,9 @@ class Game:
         return f"\n{string1}\n{string2}\n{string3}"
 
     def end(self) -> bool:
-        comb = ({1,2,3},{4,5,6},{7,8,9},
-                {1,5,9},{7,5,3},
-                {1,4,7},{2,5,8},{3,6,9})
+        comb = ({1, 2, 3}, {4, 5, 6}, {7, 8, 9},
+                {1, 5, 9}, {7, 5, 3},
+                {1, 4, 7}, {2, 5, 8}, {3, 6, 9})
         game_state_total = [(n + 1, i) for n, i in enumerate(self.playground)]
         cross_list = set(n for n, i in game_state_total if i == 'X')
         zero_list = set(n for n, i in game_state_total if i == 'O')
@@ -59,7 +62,7 @@ class Game:
         if not ability_to_move:
             return True
         return False
-        
+
     pass
 
 
@@ -70,18 +73,22 @@ class Player:
         self.name = ''
         self.opponent = None
         Player.player_list.append(self)
+        self.gameover = False
         pass
 
     def delete(self):
+        print('Delete', self, self.__dict__)
+        print(*[i.name for i in Player.player_list])
         if self.opponent:
             self.opponent.opponent = None
-        Player.player_list.remove(self)
+        if self in Player.player_list:
+            Player.player_list.remove(self)
+        pass
 
     def registration(self, dic):
         self.name = dic['name']
         dic['action'] = 'opponent_s_choice'
         return dic
-        pass
 
     def opponent_s_choice(self, dic):
         opponents = [
@@ -115,8 +122,9 @@ class Player:
             rem = 'Your move '
             if self.round.whose_move(self):
                 rem = self.round.move(self, message)
-            trying = 15 # settimeout
-            while not self.round.whose_move(self) and trying:  # the second player expects
+            trying = 15  # settimeout
+            # the second player expects
+            while not self.round.whose_move(self) and trying:
                 trying -= 1
                 if self.opponent:  # if an opponent exists
                     print('sleep', self.name, self.opponent, self.opponent.name)
@@ -125,10 +133,13 @@ class Player:
                     break
             if self.round.end():
                 if self.round.winner:
-                    dic['message'] = 'Player ' + self.round.winner.name + ' win!'
+                    dic['message'] = self.round.show_playground() +\
+                        '\nPlayer ' + self.round.winner.name + ' win!'
                 else:
-                    dic['message'] = 'The game of chess ended in a draw'
+                    dic['message'] = self.round.show_playground() +\
+                        '\nThe game of chess ended in a draw'
                 dic['action'] = 'end_of_game'
+
                 if self.opponent:
                     self.opponent.opponent = None
                 self.opponent = None
@@ -144,12 +155,15 @@ class Player:
             pass
         else:
             dic['message'] = 'Your opponent disconnected!\nYou win!'
-            dic['action'] = 'opponent_s_choice'
+            dic['action'] = 'end_of_game'
         return dic
 
-    def end_of_game(self, data):
-        print('end of game', self.name, data)
-        pass
+    def end_of_game(self, dic):
+        print('end of game', self.name)
+        self.delete()
+        self.round = None
+        self.gameover = True
+        return dic
 
     def processing_request(self, data):
         if data:
@@ -174,7 +188,7 @@ class EchoHandler(BaseRequestHandler):
         # print('Server ', self, dir(self), self.__dict__)
         # self.request.settimeout(30)
         self.game = True
-        while self.player:
+        while not self.player.gameover:
             try:
                 msg = self.player.processing_request(self.request.recv(4096))
             except ConnectionAbortedError:
