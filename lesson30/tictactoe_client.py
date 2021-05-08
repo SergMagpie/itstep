@@ -20,7 +20,6 @@ class TicTacClient:
 
     def processing_request(self, data):
         if data != b'null' and data:
-            # print('text', data)
             text = data.decode('utf-8')
             dic = json.loads(text)
             print(dic['message'])
@@ -70,7 +69,6 @@ class TicTacClient:
                         ConnectionAbortedError, OSError):
                     sock.close()
                     print('Server disconnected\nGoodbye!')
-                # print(text)
                 try:
                     sock.sendall(text)
                 except (ConnectionAbortedError, OSError):

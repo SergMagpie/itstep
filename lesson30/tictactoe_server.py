@@ -39,10 +39,14 @@ class Game:
                 return 'You made a mistake'
 
     def show_playground(self):
-        string1 = self.playground[6:9]
-        string2 = self.playground[3:6]
-        string3 = self.playground[0:3]
-        return f"\n{string1}\n{string2}\n{string3}"
+        string_top = "┌─┬─┬─┐"
+        string1 = "│" + "│".join(self.playground[6:9]) + "│"
+        string_med = "├─┼─┼─┤"
+        string2 = "│" + "│".join(self.playground[3:6]) + "│"
+        string3 = "│" + "│".join(self.playground[0:3]) + "│"
+        string_bottom = "└─┴─┴─┘"
+        return f"\n{string_top}\n{string1}\n{string_med}\n{string2}"\
+            f"\n{string_med}\n{string3}\n{string_bottom}"
 
     def end(self) -> bool:
         comb = ({1, 2, 3}, {4, 5, 6}, {7, 8, 9},
@@ -63,7 +67,6 @@ class Game:
             return True
         return False
 
-    pass
 
 
 class Player:
@@ -74,16 +77,12 @@ class Player:
         self.opponent = None
         Player.player_list.append(self)
         self.gameover = False
-        pass
 
     def delete(self):
-        print('Delete', self, self.__dict__)
-        print(*[i.name for i in Player.player_list])
         if self.opponent:
             self.opponent.opponent = None
         if self in Player.player_list:
             Player.player_list.remove(self)
-        pass
 
     def registration(self, dic):
         self.name = dic['name']
@@ -95,7 +94,7 @@ class Player:
             play for play in Player.player_list
             if play is not self and not play.opponent]
         if self.opponent:
-            pass
+            pass # this pass is a ficha, not the bag!
         elif opponents:
             self.opponent = opponents[0]
             game = Game(self, self.opponent)
@@ -106,7 +105,6 @@ class Player:
             self.opponent.symbol = 'O'
         else:
             dic['message'] = 'You must wait for opponent'
-            print(*[play.name for play in Player.player_list])
             sleep(2)
             return dic
         dic['message'] = f'Your opponent is {self.opponent.name}' +\
@@ -118,7 +116,6 @@ class Player:
     def step(self, dic):
         message = dic['message']
         if self.opponent:
-            print(message)
             rem = 'Your move '
             if self.round.whose_move(self):
                 rem = self.round.move(self, message)
@@ -127,7 +124,6 @@ class Player:
             while not self.round.whose_move(self) and trying:
                 trying -= 1
                 if self.opponent:  # if an opponent exists
-                    print('sleep', self.name, self.opponent, self.opponent.name)
                     sleep(2)
                 else:
                     break
@@ -147,12 +143,6 @@ class Player:
                 dic['message'] = rem + \
                     self.round.show_playground() + \
                     '\nYour move '
-            # if message == 'exit':
-            #     print(f'Player {self.name} disconected')
-            #     self.delete()
-            #     del self
-            #     return None
-            pass
         else:
             dic['message'] = 'Your opponent disconnected!\nYou win!'
             dic['action'] = 'end_of_game'
@@ -168,7 +158,6 @@ class Player:
     def processing_request(self, data):
         if data:
             text = data.decode('utf-8')
-            print('text', text)
             dic = json.loads(text)
             actions = {
                 'registration': self.registration,
@@ -178,15 +167,13 @@ class Player:
             }
             dic = actions[dic['action']](dic)
             return str.encode(json.dumps(dic))
-    pass
 
 
 class EchoHandler(BaseRequestHandler):
     def handle(self):
         print('New connection from:', self.client_address)
         self.player = Player()  # creating a new player
-        # print('Server ', self, dir(self), self.__dict__)
-        # self.request.settimeout(30)
+        self.request.settimeout(30)
         self.game = True
         while not self.player.gameover:
             try:
