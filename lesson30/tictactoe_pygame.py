@@ -1,16 +1,133 @@
 import pygame
 import os
+from time import sleep
+import re
+from threading import Thread
+
+import socket
+import json
+
 
 class Queue:
     def __init__(self) -> None:
-        self.steck = []
+        self.in_message = []
+        self.out_message = []
+        self.field_message = ['CCCCCCCCC']
+        self.waiting_for_outgoing_message = True
 
-        pass
+    def outgoing_message(self):
+        while not self.out_message:
+            self.waiting_for_outgoing_message = True
+            sleep(0.5)
+        return self.out_message.pop()
+
+    def incoming_message(self, message: str):
+        list_message = message.split('\n')
+        field = ''
+        self.in_message.clear()
+        for i in list_message:
+            if re.fullmatch(r"^[^┌│├└].+", i):
+                self.in_message.append(i)
+            if re.fullmatch(r"│[\dXO]│[\dXO]│[\dXO]│", i):
+                for j in i:
+                    if j.isdigit():
+                        field += 'C'
+                    elif j in ('X', 'O'):
+                        field += j
+        if field:
+            self.field_message.clear()
+            self.field_message.append(field)
+        return message
+
+    def field(self):
+        return self.field_message[0]
+
+
+transfer = Queue()
+
+
+class TicTacClient:
+    def __init__(self, name) -> None:
+        self.name = name
+        self.game = True
+        # self.must_unswer = False
+    '''
+    action:
+    'registration'
+    'opponent_s_choice'
+    'step'
+    'end_of_game'
+    '''
+
+    def processing_request(self, data):
+        if data != b'null' and data:
+            text = data.decode('utf-8')
+            dic = json.loads(text)
+            print(transfer.incoming_message(dic['message']))
+            if dic['action'] == 'end_of_game':
+                self.game = False
+            if dic['action'] == 'step':
+                message = transfer.outgoing_message()  # input('Input ')
+                print(transfer.incoming_message('Please, wait.'))
+                if message == 'exit':
+                    self.game = False
+                    dic['action'] == 'end_of_game'
+                dic['message'] = message
+            return str.encode(json.dumps(dic))
+        else:
+            print(transfer.incoming_message('Goodbye'))
+            self.game = False
+            dic = {
+                'name': self.name,
+                'action': 'end_of_game',
+                'message': ''
+            }
+            return str.encode(json.dumps(dic))
+
+    def registration_message(self):
+        dic = {
+            'name': self.name,
+            'action': 'registration',
+            'message': ''
+        }
+        return str.encode(json.dumps(dic))
+
+    def run_game(self):
+
+        # Create a TCP/IP socket
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+
+            # Connect the socket to the port where the server is listening
+            server_address = ('127.0.0.1', 8888)
+            print(transfer.incoming_message(
+                'connecting to {} port {}'.format(*server_address)))
+            sock.connect(server_address)
+            sock.sendall(self.registration_message())
+            while self.game:
+                # Look for the response
+                try:
+                    text = self.processing_request(sock.recv(4096))
+                except (ConnectionResetError, KeyboardInterrupt,
+                        ConnectionAbortedError, OSError):
+                    sock.close()
+                    print(transfer.incoming_message(
+                        'Server disconnected\nGoodbye!'))
+                    self.game = False
+                try:
+                    sock.sendall(text)
+                except (ConnectionAbortedError, OSError):
+                    sock.close()
+                    print(transfer.incoming_message(
+                        'Server disconnected\nGoodbye!'))
+                    self.game = False
+            sock.close()
+
 
 def screen():
+    # variable for thread communication
 
     WIDTH = 600
-    HEIGHT = 800
+    HEIGHT = 900
     FPS = 60
     WHITE = (255, 255, 255)
     BLACK = (0, 0, 0)
@@ -19,7 +136,7 @@ def screen():
     BLUE = (0, 0, 255)
     YELLOW = (255, 255, 0)
 
-    class Player(pygame.sprite.Sprite):
+    class Pane(pygame.sprite.Sprite):
         def __init__(self, num, sign):
             pygame.sprite.Sprite.__init__(self)
             game_folder = os.path.dirname(__file__)
@@ -46,18 +163,20 @@ def screen():
                      }
 
             # self.image = pygame.Surface((180, 180))
-            # self.image.fill(WHITE)
             self.image = img[sign]
+            # self.image.fill(WHITE)
             self.image = pygame.transform.scale(
                 self.image, (180, 180))
             # self.image.set_colorkey(WHITE)
             self.rect = self.image.get_rect()
             self.rect.centerx = 195 * place[num][1] - 90
             self.rect.bottom = 195 * place[num][0]
+            self.num = num
 
     def make_game_ground(ground):
-        player = [Player(num + 1, sign) for num, sign in enumerate(ground)]
-        return player
+        g3, g2, g1 = ground[:3], ground[3:6], ground[6:]
+        pane = [Pane(num + 1, sign) for num, sign in enumerate(g1 + g2 + g3)]
+        return pane
 
     def draw_text(surf, text, size, x, y):
         font_name = pygame.font.match_font('arial')
@@ -74,13 +193,17 @@ def screen():
     clock = pygame.time.Clock()
 
     all_sprites = pygame.sprite.Group()
-    players = make_game_ground('XXXCCCOOO')
-    all_sprites.add(players)
+    panes = make_game_ground(transfer.field())
+    all_sprites.add(panes)
     running = True
     active_input = True
-    input_text = ''
+    gameover = False
+    first_answer = True
     text1 = 'Hello'
     text2 = 'Enter your name'
+    text3 = ''
+    text4 = ''
+    player_name = ''
     while running:
         # Держим цикл на правильной скорости
         clock.tick(FPS)
@@ -88,24 +211,74 @@ def screen():
         for event in pygame.event.get():
             # проверка для закрытия окна
             if event.type == pygame.QUIT:
+                transfer.out_message.append('exit')
                 running = False
             if event.type == pygame.KEYDOWN:
                 if active_input:
-                    if event.key == pygame.K_RETURN:
-                        print(input_text)
-                        input_text = ''
+                    if event.key in (pygame.K_RETURN, pygame.K_KP_ENTER):
+                        if not player_name and text4:
+                            player_name = text4
+                            text4 = ''
+                            # active_input = False
+                            player = TicTacClient(player_name)
+                            game = Thread(target=player.run_game)
+                            game.start()
+                        elif transfer.waiting_for_outgoing_message:
+                            transfer.out_message.append(text4)
+                            text4 = ''
+                            # active_input = False
+                            transfer.waiting_for_outgoing_message = False
+                        elif gameover:
+                            if text4 == 'y':
+                                print('starting new game')
+                                player = TicTacClient(player_name)
+                                game = Thread(target=player.run_game)
+                                game.start()
+                            else:
+                                running = False
                     elif event.key == pygame.K_BACKSPACE:
-                        input_text = input_text[:-1]
+                        text4 = text4[:-1]
+                    elif event.key == pygame.K_ESCAPE:
+                        transfer.out_message.append('exit')
                     else:
-                        input_text += event.unicode
+                        text4 += event.unicode
+            if event.type == pygame.MOUSEBUTTONUP:
+                if transfer.waiting_for_outgoing_message:
+                    pos = pygame.mouse.get_pos()
+                    clicked_panes = [s for s in panes if s.rect.collidepoint(pos)]
+                    if clicked_panes:    
+                        button = [i for i in clicked_panes][0]
+                        button.image.fill(RED)
+                        text = str(button.num)
+                        transfer.out_message.append(text)
+                        transfer.waiting_for_outgoing_message = False
         # Обновление
+        # active_input = transfer.waiting_for_outgoing_message
+        panes = make_game_ground(transfer.field())
+        all_sprites.add(panes)
         all_sprites.update()
         # Рендеринг
         screen.fill(BLACK)
         all_sprites.draw(screen)
+        if transfer.in_message:
+            text1 = text2
+            text2 = text3
+            text3 = transfer.in_message.pop(0)
+        if player_name:
+            if not game.is_alive():
+                if first_answer:
+                    text1 = text2
+                    text2 = text3
+                    text3 = 'Will play again? y/n '
+                    first_answer = False
+                gameover = True
+                transfer.waiting_for_outgoing_message = False
+            else:
+                first_answer = True
         draw_text(screen, text1, 50, 300, 600)
         draw_text(screen, text2, 50, 300, 670)
-        draw_text(screen, input_text, 50, 300, 740)
+        draw_text(screen, text3, 50, 300, 740)
+        draw_text(screen, text4, 50, 300, 810)
 
         # После отрисовки всего, переворачиваем экран
         pygame.display.flip()

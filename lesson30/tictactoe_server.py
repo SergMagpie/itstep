@@ -124,7 +124,7 @@ class Player:
             while not self.round.whose_move(self) and trying:
                 trying -= 1
                 if self.opponent:  # if an opponent exists
-                    sleep(2)
+                    sleep(0.5)
                 else:
                     break
             if self.round.end():

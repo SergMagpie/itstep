@@ -22,6 +22,7 @@ class TicTacClient:
         if data != b'null' and data:
             text = data.decode('utf-8')
             dic = json.loads(text)
+            print(dic)
             print(dic['message'])
             if dic['action'] == 'end_of_game':
                 self.game = False
@@ -69,11 +70,13 @@ class TicTacClient:
                         ConnectionAbortedError, OSError):
                     sock.close()
                     print('Server disconnected\nGoodbye!')
+                    self.game = False
                 try:
                     sock.sendall(text)
                 except (ConnectionAbortedError, OSError):
                     sock.close()
                     print('Server disconnected\nGoodbye!')
+                    self.game = False
             sock.close()
 
 
