@@ -313,7 +313,7 @@ def init_connection():
         except (FileNotFoundError, ValueError):
             addr = input('Enter server addres ')
             if not addr:
-                addr = 'localhost'
+                addr = '127.0.0.1'
             port = input('Enter server port ')
             if not port or not port.isdigit():
                 port = "8888"
