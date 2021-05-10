@@ -3,12 +3,14 @@ import os
 from time import sleep
 import re
 from threading import Thread
-
+import sys
 import socket
 import json
 
 
 class Queue:
+    '''class of variables for communication between processes'''
+
     def __init__(self) -> None:
         self.in_message = []
         self.out_message = []
@@ -16,12 +18,15 @@ class Queue:
         self.waiting_for_outgoing_message = True
 
     def outgoing_message(self):
+        '''function of waiting for a response to a server request'''
         while not self.out_message:
             self.waiting_for_outgoing_message = True
             sleep(0.5)
         return self.out_message.pop()
 
     def incoming_message(self, message: str):
+        '''function of parsing and transferring server messages 
+        to the pygame_client (wrapper for print)'''
         list_message = message.split('\n')
         field = ''
         self.in_message.clear()
@@ -47,6 +52,8 @@ transfer = Queue()
 
 
 class TicTacClient:
+    '''server client'''
+
     def __init__(self, name) -> None:
         self.name = name
         self.game = True
@@ -60,6 +67,7 @@ class TicTacClient:
     '''
 
     def processing_request(self, data):
+        '''main server message handler'''
         if data != b'null' and data:
             text = data.decode('utf-8')
             dic = json.loads(text)
@@ -85,6 +93,7 @@ class TicTacClient:
             return str.encode(json.dumps(dic))
 
     def registration_message(self):
+        '''registers the player on the server'''
         dic = {
             'name': self.name,
             'action': 'registration',
@@ -93,14 +102,15 @@ class TicTacClient:
         return str.encode(json.dumps(dic))
 
     def run_game(self):
+        '''main server loop'''
 
         # Create a TCP/IP socket
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
 
             # Connect the socket to the port where the server is listening
-            server_address = ('127.0.0.1', 8888)
-            print(transfer.incoming_message(
-                'connecting to {} port {}'.format(*server_address)))
+            server_address = init_connection()
+            # print(transfer.incoming_message(
+            #     'connecting to {} port {}'.format(*server_address)))
             sock.connect(server_address)
             sock.sendall(self.registration_message())
             while self.game:
@@ -124,6 +134,8 @@ class TicTacClient:
 
 
 def screen():
+    '''main game loop and screen creator'''
+
     # variable for thread communication
 
     WIDTH = 600
@@ -205,11 +217,11 @@ def screen():
     text4 = ''
     player_name = ''
     while running:
-        # Держим цикл на правильной скорости
+        # Keeping the cycle at the correct speed
         clock.tick(FPS)
-        # Ввод процесса (события)
+        # Process (event) input
         for event in pygame.event.get():
-            # проверка для закрытия окна
+            # check to close the window
             if event.type == pygame.QUIT:
                 transfer.out_message.append('exit')
                 running = False
@@ -245,19 +257,20 @@ def screen():
             if event.type == pygame.MOUSEBUTTONUP:
                 if transfer.waiting_for_outgoing_message:
                     pos = pygame.mouse.get_pos()
-                    clicked_panes = [s for s in panes if s.rect.collidepoint(pos)]
-                    if clicked_panes:    
+                    clicked_panes = [
+                        s for s in panes if s.rect.collidepoint(pos)]
+                    if clicked_panes:
                         button = [i for i in clicked_panes][0]
                         button.image.fill(RED)
                         text = str(button.num)
                         transfer.out_message.append(text)
                         transfer.waiting_for_outgoing_message = False
-        # Обновление
+        # Update
         # active_input = transfer.waiting_for_outgoing_message
         panes = make_game_ground(transfer.field())
         all_sprites.add(panes)
         all_sprites.update()
-        # Рендеринг
+        # Rendering
         screen.fill(BLACK)
         all_sprites.draw(screen)
         if transfer.in_message:
@@ -280,11 +293,62 @@ def screen():
         draw_text(screen, text3, 50, 300, 740)
         draw_text(screen, text4, 50, 300, 810)
 
-        # После отрисовки всего, переворачиваем экран
+        # After drawing everything, flip the screen
         pygame.display.flip()
 
     pygame.quit()
+    sys.exit(0)
+
+
+def init_connection():
+    '''helps to connect to the server'''
+    game_folder = os.path.dirname(__file__)
+    img_folder = os.path.join(game_folder, 'res')
+    filename = os.path.join(img_folder, "tictactoe_pygame.ini")
+    key = '1'
+    while key != 'exit':
+        try:
+            with open(filename, "r") as f:
+                addr, port = json.load(f)
+        except (FileNotFoundError, ValueError):
+            addr = input('Enter server addres ')
+            if not addr:
+                addr = 'localhost'
+            port = input('Enter server port ')
+            if not port or not port.isdigit():
+                port = "8888"
+            port = int(port)
+
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+
+            # Connect the socket to the port where the server is listening
+            server_address = (addr, port)
+            print(transfer.incoming_message(
+                'connecting to {} port {}'.format(*server_address)))
+            try:
+                sock.connect(server_address)
+                dic = {
+                    'name': 'try',
+                    'action': 'end_of_game',
+                    'message': 'exit'
+                }
+                sock.sendall(str.encode(json.dumps(dic)))
+                print('connect is OK')
+                with open(filename, "w") as f:
+                    json.dump(server_address, f, indent=4)
+                return server_address
+            except (ConnectionRefusedError, socket.gaierror):
+                print('not connection')
+                key = input(
+                    '1 - try again, 2 - change server addres, exit to exit ')
+                if key == '2':
+                    try:
+                        os.remove(filename)
+                    except OSError:
+                        pass
+    sys.exit(0)
 
 
 if __name__ == "__main__":
+
     screen()

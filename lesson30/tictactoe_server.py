@@ -7,6 +7,8 @@ import sys
 
 
 class Game:
+    '''here are the actual games'''
+
     def __init__(self, playerX, playerO) -> None:
         self.step = 1
         self.playground = '123456789'
@@ -15,6 +17,7 @@ class Game:
         self.winner = None
 
     def whose_move(self, player):
+        '''determines whose turn it is to move'''
         if self.step % 2:
             moved_player = self.playerX
         else:
@@ -22,6 +25,7 @@ class Game:
         return player is moved_player
 
     def move(self, player, message):
+        '''processes the player's move'''
         if len(message) == 1 and message in self.playground:
             new_playground = []
             for i in self.playground:
@@ -39,6 +43,7 @@ class Game:
                 return 'You made a mistake'
 
     def show_playground(self):
+        '''draws the playing field'''
         string_top = "┌─┬─┬─┐"
         string1 = "│" + "│".join(self.playground[6:9]) + "│"
         string_med = "├─┼─┼─┤"
@@ -49,6 +54,7 @@ class Game:
             f"\n{string_med}\n{string3}\n{string_bottom}"
 
     def end(self) -> bool:
+        '''checks if the game is over'''
         comb = ({1, 2, 3}, {4, 5, 6}, {7, 8, 9},
                 {1, 5, 9}, {7, 5, 3},
                 {1, 4, 7}, {2, 5, 8}, {3, 6, 9})
@@ -68,8 +74,8 @@ class Game:
         return False
 
 
-
 class Player:
+    '''here are the players'''
     player_list = []
 
     def __init__(self) -> None:
@@ -79,22 +85,25 @@ class Player:
         self.gameover = False
 
     def delete(self):
+        '''removes the player'''
         if self.opponent:
             self.opponent.opponent = None
         if self in Player.player_list:
             Player.player_list.remove(self)
 
     def registration(self, dic):
+        '''registers a new player'''
         self.name = dic['name']
         dic['action'] = 'opponent_s_choice'
         return dic
 
     def opponent_s_choice(self, dic):
+        '''selects and appoints the first opponent found on the server'''
         opponents = [
             play for play in Player.player_list
-            if play is not self and not play.opponent]
+            if play is not self and not play.opponent and play.name]
         if self.opponent:
-            pass # this pass is a ficha, not the bag!
+            pass  # this pass is a ficha, not the bag!
         elif opponents:
             self.opponent = opponents[0]
             game = Game(self, self.opponent)
@@ -114,6 +123,7 @@ class Player:
         return dic
 
     def step(self, dic):
+        '''controls the game step by step'''
         message = dic['message']
         if self.opponent:
             rem = 'Your move '
@@ -149,6 +159,7 @@ class Player:
         return dic
 
     def end_of_game(self, dic):
+        '''removes the client at the end of the game'''
         print('end of game', self.name)
         self.delete()
         self.round = None
@@ -156,6 +167,7 @@ class Player:
         return dic
 
     def processing_request(self, data):
+        '''distributes the request among the handlers'''
         if data:
             text = data.decode('utf-8')
             dic = json.loads(text)
@@ -170,6 +182,8 @@ class Player:
 
 
 class EchoHandler(BaseRequestHandler):
+    '''here is the server itself'''
+
     def handle(self):
         print('New connection from:', self.client_address)
         self.player = Player()  # creating a new player
@@ -178,7 +192,7 @@ class EchoHandler(BaseRequestHandler):
         while not self.player.gameover:
             try:
                 msg = self.player.processing_request(self.request.recv(4096))
-            except ConnectionAbortedError:
+            except (ConnectionAbortedError, ConnectionResetError):
                 print(f'Player {self.player.name} disconected')
                 self.player.delete()
                 del self.player
@@ -189,7 +203,7 @@ class EchoHandler(BaseRequestHandler):
 
 
 if __name__ == '__main__':
-    server_address = ('127.0.0.1', 8888)
+    server_address = ('localhost', 8888)
     server = ThreadingTCPServer(server_address, EchoHandler)
     try:
         server.serve_forever()

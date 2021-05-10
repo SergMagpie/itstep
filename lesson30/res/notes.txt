@@ -1,0 +1,13 @@
+You need to start the server separately. 
+Then connect clients to it. 
+GUI in CLI clients are connected on an equal footing. 
+The server "catches" clients and unites the nearest ones to the game. 
+The distribution of X or O occurs as if, who first asked, in the end - by chance.
+Duplication of the GUI in the CLI occurs to control the work, but the input works only with the GUI. 
+The GUI responds to both the mouse and text input.
+
+
+Imperfections:
+1. Sometimes processes on the server crash and participate in the game, I don't know how to find and kill them.
+2. When the pygame_client exits, a working socket is also sometimes left, I do not know how to kill it.
+3. Appearance and communication - the task from the category "there is no limit to perfection."
