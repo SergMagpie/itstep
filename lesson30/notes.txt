@@ -2,9 +2,15 @@ You need to start the server separately.
 Then connect clients to it. 
 GUI in CLI clients are connected on an equal footing. 
 The server "catches" clients and unites the nearest ones to the game. 
-The distribution of X or O occurs as if, who first asked, in the end - by chance.
-Duplication of the GUI in the CLI occurs to control the work, but the input works only with the GUI. 
+The distribution of X or O occurs as if, 
+who first asked, in the end - by chance.
+Duplication of the GUI in the CLI occurs to control the work, 
+but the input works only with the GUI. 
 The GUI responds to both the mouse and text input.
+
+IMPORTANTLY! In order to ensure the stability of the server, 
+there is a limit on the waiting time for the client's response - 30 seconds. 
+That is, after 30 seconds of inactivity, the server disconnects from the client.
 
 
 Imperfections:
