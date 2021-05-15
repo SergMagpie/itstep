@@ -9,14 +9,15 @@ os.chdir(dname)
 file_name = "names.json"
 file_invoice = "invoice.json"
 
+
 def write_to_file(message, filename="output.txt"):
     """
     Function for write output data.
-    """    
+    """
     with open(filename, "a") as f:
         for string in message:
-            f.write(string + '\n') 
-        f.write('\n') 
+            f.write(string + '\n')
+        f.write('\n')
 
 
 def select_for_select():
@@ -82,10 +83,12 @@ def display_of_all_transactions():  # 1
     output.append("{:<10}{:<25}{:<25}{:<15}{:<25}{:<10}{:<10}".format(
         *[description[0] for description in cur.description]))
     for row in rows:
-        output.append("{:<10}{:<25}{:<25}{:<15}{:<25}{:<10}{:<10}".format(*row))
+        output.append(
+            "{:<10}{:<25}{:<25}{:<15}{:<25}{:<10}{:<10}".format(*row))
     print(*output, sep='\n')
     if input('Write to file? y/n ') == 'y':
         write_to_file(output)
+
 
 def display_of_all_sellers():  # 2
     cur.execute("SELECT * FROM salesmen")
@@ -98,6 +101,7 @@ def display_of_all_sellers():  # 2
     print(*output, sep='\n')
     if input('Write to file? y/n ') == 'y':
         write_to_file(output)
+
 
 def display_of_all_buyers():  # 3
     cur.execute("SELECT * FROM customers")
@@ -137,7 +141,8 @@ def display_of_transactions_of_a_specific_seller():  # 4
     output.append("{:<10}{:<25}{:<25}{:<15}{:<25}{:<10}{:<10}".format(
         *[description[0] for description in cur.description]))
     for row in rows:
-        output.append("{:<10}{:<25}{:<25}{:<15}{:<25}{:<10}{:<10}".format(*row))
+        output.append(
+            "{:<10}{:<25}{:<25}{:<15}{:<25}{:<10}{:<10}".format(*row))
     print(*output, sep='\n')
     if input('Write to file? y/n ') == 'y':
         write_to_file(output)
@@ -165,7 +170,8 @@ def display_of_the_maximum_transaction_amount():  # 5
     output.append("{:<10}{:<25}{:<25}{:<15}{:<25}{:<10}{:<10}".format(
         *[description[0] for description in cur.description]))
     for row in rows:
-        output.append("{:<10}{:<25}{:<25}{:<15}{:<25}{:<10}{:<10}".format(*row))
+        output.append(
+            "{:<10}{:<25}{:<25}{:<15}{:<25}{:<10}{:<10}".format(*row))
     print(*output, sep='\n')
     if input('Write to file? y/n ') == 'y':
         write_to_file(output)
@@ -193,7 +199,8 @@ def display_of_the_minimum_transaction_amount():  # 6
     output.append("{:<10}{:<25}{:<25}{:<15}{:<25}{:<10}{:<10}".format(
         *[description[0] for description in cur.description]))
     for row in rows:
-        output.append("{:<10}{:<25}{:<25}{:<15}{:<25}{:<10}{:<10}".format(*row))
+        output.append(
+            "{:<10}{:<25}{:<25}{:<15}{:<25}{:<10}{:<10}".format(*row))
     print(*output, sep='\n')
     if input('Write to file? y/n ') == 'y':
         write_to_file(output)
@@ -226,11 +233,11 @@ def display_the_maximum_transaction_amount_for_specific_seller():  # 7
     output.append("{:<10}{:<25}{:<25}{:<15}{:<25}{:<10}{:<10}".format(
         *[description[0] for description in cur.description]))
     for row in rows:
-        output.append("{:<10}{:<25}{:<25}{:<15}{:<25}{:<10}{:<10}".format(*row))
+        output.append(
+            "{:<10}{:<25}{:<25}{:<15}{:<25}{:<10}{:<10}".format(*row))
     print(*output, sep='\n')
     if input('Write to file? y/n ') == 'y':
         write_to_file(output)
-
 
 
 def display_the_minimum_transaction_amount_for_specific_seller():  # 8
@@ -260,7 +267,8 @@ def display_the_minimum_transaction_amount_for_specific_seller():  # 8
     output.append("{:<10}{:<25}{:<25}{:<15}{:<25}{:<10}{:<10}".format(
         *[description[0] for description in cur.description]))
     for row in rows:
-        output.append("{:<10}{:<25}{:<25}{:<15}{:<25}{:<10}{:<10}".format(*row))
+        output.append(
+            "{:<10}{:<25}{:<25}{:<15}{:<25}{:<10}{:<10}".format(*row))
     print(*output, sep='\n')
     if input('Write to file? y/n ') == 'y':
         write_to_file(output)
@@ -293,7 +301,8 @@ def display_the_maximum_transaction_amount_for_specific_buyer():  # 9
     output.append("{:<10}{:<25}{:<25}{:<15}{:<25}{:<10}{:<10}".format(
         *[description[0] for description in cur.description]))
     for row in rows:
-        output.append("{:<10}{:<25}{:<25}{:<15}{:<25}{:<10}{:<10}".format(*row))
+        output.append(
+            "{:<10}{:<25}{:<25}{:<15}{:<25}{:<10}{:<10}".format(*row))
     print(*output, sep='\n')
     if input('Write to file? y/n ') == 'y':
         write_to_file(output)
@@ -326,7 +335,8 @@ def display_the_minimum_transaction_amount_for_specific_buyer():  # 10
     output.append("{:<10}{:<25}{:<25}{:<15}{:<25}{:<10}{:<10}".format(
         *[description[0] for description in cur.description]))
     for row in rows:
-        output.append("{:<10}{:<25}{:<25}{:<15}{:<25}{:<10}{:<10}".format(*row))
+        output.append(
+            "{:<10}{:<25}{:<25}{:<15}{:<25}{:<10}{:<10}".format(*row))
     print(*output, sep='\n')
     if input('Write to file? y/n ') == 'y':
         write_to_file(output)
