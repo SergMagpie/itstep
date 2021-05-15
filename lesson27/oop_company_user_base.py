@@ -1,3 +1,12 @@
+import re
+import os
+import json
+# Actualised a directory with a script.
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
+
+
 class User:
     def __init__(self,
                  surname,
@@ -32,13 +41,6 @@ def company_user_base():
     allows you to add users
     and display a list of all added.
     '''
-    import re
-    import os
-    import json
-    # Actualised a directory with a script.
-    abspath = os.path.abspath(__file__)
-    dname = os.path.dirname(abspath)
-    os.chdir(dname)
 
     def write_list(data: list, filename='company_user_base.json'):
         """
