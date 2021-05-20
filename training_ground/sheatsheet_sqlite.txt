@@ -43,3 +43,33 @@ RADIANS(x)	конвертирует значение x из градусов в 
 ABS(x)	модуль числа x	ABS(-1) = 1
 ABS(1) = 1
 PI()	pi = 3.1415926...	 
+
+SELECT title, amount 
+FROM book
+WHERE amount BETWEEN 5 AND 14;
+
+SELECT DISTINCT author
+FROM book;
+
+%	Любая строка, содержащая ноль или более символов	
+SELECT * FROM book WHERE author LIKE '%М.%'
+_ (подчеркивание)	Любой одиночный символ	
+SELECT * FROM book WHERE title LIKE 'Поэм_'
+
+SELECT *
+FROM trip
+ORDER BY  date_first
+LIMIT 1;
+
+DATEDIFF(date_last, date_first)
+
+день(DAY()), месяц (MONTH()), год(YEAR())
+
+CREATE TABLE genre(
+    genre_id INT PRIMARY KEY AUTO_INCREMENT, 
+    name_genre VARCHAR(30)
+);
+
+INSERT INTO genre (name_genre) 
+VALUES ('Роман');
+
