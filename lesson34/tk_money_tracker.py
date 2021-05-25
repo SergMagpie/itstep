@@ -1,7 +1,9 @@
 import tkinter as tk
 from tkinter import messagebox as mb, ttk, simpledialog
 from datetime import datetime, timedelta, date as d
+from tkinter.constants import S
 from wallet import Wallet
+from my_calendar import MyCalendar
 
 
 class MyDialog(tk.simpledialog.Dialog):
@@ -18,6 +20,12 @@ class MyDialog(tk.simpledialog.Dialog):
         self.contragent = contragent
         super().__init__(parent, title)
 
+    def show_calendar(self):
+        calend = MyCalendar(self, 'Calendar')
+        self.date = calend.rezult
+        self.date_box.delete(0, 'end')
+        self.date_box.insert(0, str(self.date or ''))
+
     def body(self, frame):
         # print(type(frame)) # tkinter.Frame
         self.money_amount_label = tk.Label(
@@ -29,6 +37,9 @@ class MyDialog(tk.simpledialog.Dialog):
 
         self.date_label = tk.Label(frame, width=25, text="date")
         self.date_label.pack()
+        self.button_date = tk.Button(frame, width=20, text='Calendar',
+                                     command=self.show_calendar)
+        self.button_date.pack()
         self.date_box = tk.Entry(frame, width=25)
         self.date_box.insert(0, str(self.date or ''))
         self.date_box.pack()
@@ -117,19 +128,41 @@ class DateDialog(tk.simpledialog.Dialog):
         self.date_end = date_end
         super().__init__(parent, title)
 
+    def show_calendar(self, arcs):
+        print(*arcs)
+        date, box = arcs
+        calend = MyCalendar(self, 'Calendar')
+        date = calend.rezult
+        box.delete(0, 'end')
+        box.insert(0, str(date or ''))
+
     def body(self, frame):
         # print(type(frame)) # tkinter.Frame
         self.date_begin_label = tk.Label(
             frame, width=25, text="date_begin")
         self.date_begin_label.pack()
         self.date_begin_box = tk.Entry(frame, width=25)
+        param_begin = (self.date_begin, self.date_begin_box)
+        self.button_date = tk.Button(
+            frame,
+            width=20,
+            text='Calendar',
+            command=lambda y=(param_begin): self.show_calendar(y))
+        self.button_date.pack()
         self.date_begin_box.insert(0, str(self.date_begin or ''))
         self.date_begin_box.pack()
 
         self.date_end_label = tk.Label(
             frame, width=25, text="date_end")
-        self.date_end_label.pack()
         self.date_end_box = tk.Entry(frame, width=25)
+        param_end = (self.date_end, self.date_end_box)
+        self.button_date = tk.Button(
+            frame,
+            width=20,
+            text='Calendar',
+            command=lambda y=(param_end): self.show_calendar(y))
+        self.button_date.pack()
+        self.date_end_label.pack()
         self.date_end_box.insert(0, str(self.date_end or ''))
         self.date_end_box.pack()
 
