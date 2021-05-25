@@ -11,7 +11,11 @@ class Wallet:
         Base.metadata.create_all(engine)
         self.session = Session()
 
-    def new_record(self, money_amount, date=d.today(), reason=None, contragent=None):
+    def new_record(self,
+                   money_amount,
+                   date=d.today(),
+                   reason=None,
+                   contragent=None):
         record = MoneyTable(money_amount, date, reason, contragent)
         self.session.add(record)
         self.session.commit()
@@ -25,14 +29,16 @@ class Wallet:
                 MoneyTable.money_amount > 0)
         elif end is None and isinstance(begin, d):
             # validate date
-            result = self.session.query(MoneyTable).where(MoneyTable.date >= begin,
-                                                          MoneyTable.money_amount > 0)
+            result = self.session.query(
+                MoneyTable).where(MoneyTable.date >= begin,
+                                  MoneyTable.money_amount > 0)
         elif isinstance(end, d) and isinstance(begin, d):
             if begin > end:
                 begin, end = end, begin
-            result = self.session.query(MoneyTable).where(MoneyTable.date >= begin,
-                                                          MoneyTable.date <= end,
-                                                          MoneyTable.money_amount > 0)
+            result = self.session.query(
+                MoneyTable).where(MoneyTable.date >= begin,
+                                  MoneyTable.date <= end,
+                                  MoneyTable.money_amount > 0)
         else:
             result = self.session.query(MoneyTable).where(
                 MoneyTable.money_amount > 0)
@@ -47,14 +53,16 @@ class Wallet:
                 MoneyTable.money_amount < 0)
         elif end is None and isinstance(begin, d):
             # validate date
-            result = self.session.query(MoneyTable).where(MoneyTable.date >= begin,
-                                                          MoneyTable.money_amount < 0)
+            result = self.session.query(
+                MoneyTable).where(MoneyTable.date >= begin,
+                                  MoneyTable.money_amount < 0)
         elif isinstance(end, d) and isinstance(begin, d):
             if begin > end:
                 begin, end = end, begin
-            result = self.session.query(MoneyTable).where(MoneyTable.date >= begin,
-                                                          MoneyTable.date <= end,
-                                                          MoneyTable.money_amount < 0)
+            result = self.session.query(
+                MoneyTable).where(MoneyTable.date >= begin,
+                                  MoneyTable.date <= end,
+                                  MoneyTable.money_amount < 0)
         else:
             result = self.session.query(MoneyTable).where(
                 MoneyTable.money_amount < 0)
@@ -78,8 +86,9 @@ class Wallet:
         elif isinstance(end, d) and isinstance(begin, d):
             if begin > end:
                 begin, end = end, begin
-            result = self.session.query(MoneyTable).where(MoneyTable.date >= begin,
-                                                          MoneyTable.date <= end)
+            result = self.session.query(
+                MoneyTable).where(MoneyTable.date >= begin,
+                                  MoneyTable.date <= end)
         else:
             result = self.session.query(MoneyTable).where()
         return result
@@ -96,14 +105,16 @@ class Wallet:
             # validate date
             result = self.session.query(MoneyTable).where(
                 MoneyTable.date >= begin,
-                MoneyTable.money_amount < 0).order_by(MoneyTable.money_amount)
+                MoneyTable.money_amount < 0).order_by(
+                    MoneyTable.money_amount)
         elif isinstance(end, d) and isinstance(begin, d):
             if begin > end:
                 begin, end = end, begin
             result = self.session.query(MoneyTable).where(
                 MoneyTable.date >= begin,
                 MoneyTable.date <= end,
-                MoneyTable.money_amount < 0).order_by(MoneyTable.money_amount)
+                MoneyTable.money_amount < 0).order_by(
+                    MoneyTable.money_amount)
         else:
             result = self.session.query(MoneyTable).where(
                 MoneyTable.money_amount < 0).order_by(
@@ -122,14 +133,16 @@ class Wallet:
             # validate date
             result = self.session.query(MoneyTable).where(
                 MoneyTable.date >= begin,
-                MoneyTable.money_amount > 0).order_by(desc(MoneyTable.money_amount))
+                MoneyTable.money_amount > 0).order_by(desc(
+                    MoneyTable.money_amount))
         elif isinstance(end, d) and isinstance(begin, d):
             if begin > end:
                 begin, end = end, begin
             result = self.session.query(MoneyTable).where(
                 MoneyTable.date >= begin,
                 MoneyTable.date <= end,
-                MoneyTable.money_amount > 0).order_by(desc(MoneyTable.money_amount))
+                MoneyTable.money_amount > 0).order_by(desc(
+                    MoneyTable.money_amount))
         else:
             result = self.session.query(MoneyTable).where(
                 MoneyTable.money_amount > 0).order_by(
@@ -137,7 +150,8 @@ class Wallet:
         return result
 
     def update(self, id, new_value):
-        self.session.query(MoneyTable).filter(MoneyTable.id == id).update(
+        self.session.query(MoneyTable).filter(
+            MoneyTable.id == id).update(
             new_value, synchronize_session=False)
         self.session.commit()
 
