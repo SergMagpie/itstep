@@ -60,3 +60,7 @@ file.mode	Возвращает режим доступа, с которым бы
 file.name	Возвращает имя файла.
 file.softspace	Возвращает False если при выводе содержимого файла следует отдельно добавлять пробел.
 
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
+

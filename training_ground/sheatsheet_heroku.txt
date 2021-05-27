@@ -66,3 +66,19 @@ $ heroku git:remote -a crosses-and-zeroes
   teams           manage teams
   update          update the Heroku CLI
   webhooks        list webhooks on an app
+
+
+$ heroku login
+$ heroku create
+$ git push heroku master
+$ heroku ps:scale web=1
+$ heroku open
+$ heroku logs --tail
+
+import os
+TOKEN = os.environ["TOKEN"]
+
+heroku config:add TOKEN=…
+
+Уничтожьте приложение:
+heroku apps:destroy --app example
