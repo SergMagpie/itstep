@@ -1,18 +1,153 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html>
 
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title>*Lorem ipsum*</title>
+    <meta charset="utf-8" />
+    <title>solution_lesson36_Soro_zl72</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+
 </head>
-<!-- Комментарий -->
+
 <body>
-    <p>Lorem ipsum dolor sit amet consectetuer cursus pede pellentesque
-        vitae pretium. Tristique mus at elit lobortis libero Sed vestibulum ut
-        eleifend habitasse. <blockquote>Quis Nam Mauris adipiscing Integer ligula dictum
-            sed at enim urna.</blockquote> Et scelerisque id et nibh dui tincidunt Curabitur faucibus
-        elit massa. Tincidunt et gravida Phasellus eget parturient faucibus tellus
-        at justo sollicitudin. Mi nulla ut adipiscing.</p>
+    <h2>Таблиця всіх статус кодів HTTP</h2>
+    <div class="flex-container">
+        <div class="item" id="con1">
+            <h4>1xx: Informational (інформаційні):</h4>
+            <ul>
+                <li>100 Continue ( &laquo;продовжуй&raquo;);</li>
+                <li>101 Switching Protocols ( &laquo;перемикання протоколів&raquo;);</li>
+                <li>102 Processing ( &laquo;йде обробка&raquo;).</li>
+            </ul>
+        </div>
+
+        <div class="item" id="con2">
+            <h4>2xx: Success (успішно):</h4>
+            <ul>
+                <li>200 OK ( &laquo;добре&raquo;);</li>
+                <li>201 Created ( &laquo;створено&raquo;);</li>
+                <li>202 Accepted ( &laquo;прийнято&raquo;);</li>
+                <li>203 Non-Authoritative Information ( &laquo;інформація не авторитетна&raquo;);</li>
+                <li>204 No Content ( &laquo;немає вмісту&raquo;);</li>
+                <li>205 Reset Content ( &laquo;скинути вміст&raquo;);</li>
+                <li>206 Partial Content ( &laquo;частковий вміст&raquo;);</li>
+                <li>207 Multi-Status ( &laquo;багатостатусний&raquo;);</li>
+                <li>208 Already Reported ( &laquo;вже повідомлялося&raquo;);</li>
+                <li>226 IM Used ( &laquo;використано IM&raquo;).</li>
+            </ul>
+        </div>
+
+        <div class="item" id="con3">
+            <h4>3xx: Redirection (перенаправлення):</h4>
+            <ul>
+                <li>300 Multiple Choices ( &laquo;безліч виборів&raquo;);</li>
+                <li>301 Moved Permanently ( &laquo;переміщено назавжди&raquo;);</li>
+                <li>302 Moved Temporarily ( &laquo;переміщено тимчасово&raquo;);</li>
+                <li>302 Found ( &laquo;знайдено&raquo;);</li>
+                <li>303 See Other ( &laquo;дивитися інше&raquo;);</li>
+                <li>304 Not Modified ( &laquo;нічого не змінено&raquo;);</li>
+                <li>305 Use Proxy;</li>
+                <li>306 - зарезервовано (код використовувався тільки в ранніх специфікаціях);</li>
+                <li>307 Temporary Redirect ( &laquo;тимчасове перенаправлення&raquo;);</li>
+                <li>308 Permanent Redirect ( &laquo;постійне перенаправлення&raquo;).</li>
+            </ul>
+        </div>
+
+        <div class="item" id="con4">
+            <h4>4xx: Client Error (помилка клієнта):</h4>
+            <ul>
+                <li>400 Bad Request ( &laquo;поганий, неправильний запит&raquo;);</li>
+                <li>401 Unauthorized ( &laquo;не авторизований (не скористався)&raquo;);</li>
+                <li>402 Payment Required ( &laquo;необхідна оплата&raquo;);</li>
+                <li>403 Forbidden ( &laquo;заборонено (не уповноважений)&raquo;);</li>
+                <li>404 Not Found ( &laquo;не знайдено&raquo;);</li>
+                <li>405 Method Not Allowed ( &laquo;метод не підтримується&raquo;);</li>
+                <li>406 Not Acceptable ( &laquo;неприйнятно&raquo;);</li>
+                <li>407 Proxy Authentication Required ( &laquo;необхідна аутентифікація проксі&raquo;);</li>
+                <li>408 Request Timeout ( &laquo;минув час очікування&raquo;);</li>
+                <li>409 Conflict ( &laquo;конфлікт&raquo;);</li>
+                <li>410 Gone;</li>
+                <li>411 Length Required;</li>
+                <li>412 Precondition Failed ( &laquo;умова помилкова&raquo;);</li>
+                <li>413 Payload Too Large ( &laquo;корисне навантаження занадто велике&raquo;);</li>
+                <li>414 URI Too Long ( &laquo; URI занадто довгий&raquo;);</li>
+                <li>415 Unsupported Media Type ( &laquo;підтримуваний тип даних&raquo;);</li>
+                <li>416 Range Not Satisfiable </li>
+                <li>417 Expectation Failed ( &laquo;очікування не вдалося&raquo;);</li>
+                <li>418 I'm a teapot ( &laquo;я - чайник&raquo;);</li>
+                <li>419 Authentication Timeout (not in RFC 2616) ( &laquo;звичайна помилка перевірки CSRF&raquo;);</li>
+                <li>421 Misdirected Request;</li>
+                <li>422 Unprocessable Entity ( &laquo;необроблюваний екземпляр&raquo;);</li>
+                <li>423 Locked ( &laquo;заблоковано&raquo;);</li>
+                <li>424 Failed Dependency ( &laquo;невиконана залежність&raquo;);</li>
+                <li>426 Upgrade Required ( &laquo;необхідно оновлення&raquo;);</li>
+                <li>428 Precondition Required ( &laquo;необхідно передумова&raquo;);</li>
+                <li>429 Too Many Requests ( &laquo;занадто багато запитів&raquo;);</li>
+                <li>431 Request Header Fields Too Large ( &laquo;поля заголовка запиту занадто великі&raquo;);</li>
+                <li>449 Retry With ( &laquo;повторити з");</li>
+                <li>451 Unavailable For Legal Reasons ( &laquo;недоступно з юридичних причин&raquo;);</li>
+                <li>499 Client Closed Request (клієнт закрив з'єднання).</li>
+            </ul>
+        </div>
+
+        <div class="item" id="con5">
+            <h4>5xx: Server Error (помилка сервера):</h4>
+            <ul>
+                <li>500 Internal Server Error ( &laquo;внутрішня помилка сервера&raquo;);</li>
+                <li>501 Not Implemented ( &laquo;не реалізовано&raquo;);</li>
+                <li>502 Bad Gateway ( &laquo;поганий, неправильний шлюз&raquo;);</li>
+                <li>503 Service Unavailable ( &laquo;сервіс недоступний&raquo;);</li>
+                <li>504 Gateway Timeout ( &laquo;шлюз не відповідає&raquo;);</li>
+                <li>505 HTTP Version Not Supported ( &laquo;версія HTTP не підтримується&raquo;);</li>
+                <li>506 Variant Also Negotiates ( &laquo;варіант проводить узгодження&raquo;);</li>
+                <li>507 Insufficient Storage ( &laquo;переповнення сховища&raquo;);</li>
+                <li>508 Loop Detected ( &laquo;виявлено нескінченне перенаправлення&raquo;);</li>
+                <li>509 Bandwidth Limit Exceeded ( &laquo;вичерпана пропускна ширина каналу&raquo;);</li>
+                <li>510 Not Extended ( &laquo;не розширено&raquo;);</li>
+                <li>511 Network Authentication Required ( &laquo;потрібно мережева аутентифікація&raquo;);</li>
+                <li>520 Unknown Error ( &laquo;невідома помилка&raquo;);</li>
+                <li>521 Web Server Is Down ( &laquo;веб-сервер не працює&raquo;);</li>
+                <li>522 Connection Timed Out ( &laquo;з'єднання не відповідає&raquo;);</li>
+                <li>523 Origin Is Unreachable ( &laquo;джерело недоступне&raquo;);</li>
+                <li>524 A Timeout Occurred ( &laquo;час очікування минув&raquo;);</li>
+                <li>525 SSL Handshake Failed;</li>
+                <li>526 Invalid SSL Certificate ( &laquo;недійсний сертифікат SSL&raquo;).</li>
+            </ul>
+        </div>
+        <div class="item" style="color: #080808;">
+            <form name="calc" class="wrapper">
+                <table class="main">
+                    <tr class="display">
+                        <td colspan="4"><input type="text" name="input"></td>
+                    </tr>
+                    <tr class="buttons">
+                        <td><input type="button" value="1" OnClick="calc.input.value += '1'"></td>
+                        <td><input type="button" value="2" OnClick="calc.input.value += '2'"></td>
+                        <td><input type="button" value="3" OnClick="calc.input.value += '3'"></td>
+                        <td><input type="button" value="+" OnClick="calc.input.value += '+'"></td>
+                    </tr>
+                    <tr class="buttons">
+                        <td><input type="button" value="4" OnClick="calc.input.value += '4'"></td>
+                        <td><input type="button" value="5" OnClick="calc.input.value += '5'"></td>
+                        <td><input type="button" value="6" OnClick="calc.input.value += '6'"></td>
+                        <td><input type="button" value="-" OnClick="calc.input.value += '-'"></td>
+                    </tr>
+                    <tr class="buttons">
+                        <td><input type="button" value="7" OnClick="calc.input.value += '7'"></td>
+                        <td><input type="button" value="8" OnClick="calc.input.value += '8'"></td>
+                        <td><input type="button" value="9" OnClick="calc.input.value += '9'"></td>
+                        <td><input type="button" value="x" OnClick="calc.input.value += '*'"></td>
+                    </tr>
+                    <tr class="buttons">
+                        <td><input type="reset" value="c" OnClick="calc.input.value = ''"></td>
+                        <td><input type="button" value="0" OnClick="calc.input.value += '0'"></td>
+                        <td><input type="button" value="=" OnClick="calc.input.value = eval(calc.input.value)"></td>
+                        <td><input type="button" value="/" OnClick="calc.input.value += '/'"></td>
+                    </tr>
+                    <table>
+            </form>
+        </div>
+    </div>
+
 </body>
 
 </html>
