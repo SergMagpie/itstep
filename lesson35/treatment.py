@@ -22,7 +22,8 @@ class Treatment:
     def update_message(self, message):
         if self.session.query(Messages).where(
                 Messages.user_id == message.from_user.id,
-                Messages.date == d.fromtimestamp(message.date)):
+                Messages.date == d.fromtimestamp(
+                    message.date)).count() > 0:
 
             self.session.query(Messages).filter(
                 Messages.user_id == message.from_user.id,
