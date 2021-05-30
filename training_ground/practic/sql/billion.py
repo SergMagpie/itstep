@@ -7,7 +7,7 @@ dname = os.path.dirname(abspath)
 os.chdir(dname)
 
 
-con = sql.connect('test_db.db')
+con = sql.connect('test2_db.db')
 with con:
     cur = con.cursor()
     cur.execute("""CREATE TABLE IF NOT EXISTS 'tab1' 
@@ -36,15 +36,6 @@ with con:
         f"INSERT INTO tab2(data) VALUES {list_numbers}")
     t2 = time()
     print(f'the table2 was created in {t2 - t1} seconds')
-
-    t1 = time()
-    cur.execute('''
-            SELECT * FROM tab1, tab2
-            ''')
-    results = cur.fetchall()
-    t2 = time()
-    print(
-        f'the SELECT * FROM tab1, tab2 was created in {t2 - t1} seconds, lenth {len(results)}')
 
     t1 = time()
     cur.execute('''
