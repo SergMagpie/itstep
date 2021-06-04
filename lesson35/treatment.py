@@ -1,4 +1,3 @@
-from sqlalchemy.sql.expression import desc
 from messages import Messages
 from base import engine, Session, Base
 from datetime import date as d

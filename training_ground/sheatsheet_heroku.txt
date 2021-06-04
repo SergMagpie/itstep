@@ -82,3 +82,5 @@ heroku config:add TOKEN=…
 
 Уничтожьте приложение:
 heroku apps:destroy --app example
+
+heroku git:remote -a yourapp

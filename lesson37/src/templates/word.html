@@ -1,0 +1,10 @@
+{% extends "base.html" %} {% block content %}
+<h1>{{word}} -> {{ translate }}</h1>
+<table>
+    <tr>
+        <td><a href="/change-word/{{word}}">change</a> </td>
+        <td><a href="/delete-word/{{word}}">delete</a></td>
+        <td><a href="/mark-word/{{word}}">mark the word</a></td>
+    </tr>
+</table>
+{% endblock %}
