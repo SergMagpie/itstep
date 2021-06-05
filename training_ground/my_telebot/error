@@ -1,0 +1,86 @@
+2021-05-26 18:35:34,524 (__init__.py:489 MainThread) ERROR - TeleBot: "Infinity polling exception: (sqlite3.ProgrammingError) SQLite objects created in a thread can only be used in that same thread. The object was created 
+in thread id 7156 and this is thread id 11444.
+[SQL: SELECT count(*) AS count_1
+FROM (SELECT messages.id AS messages_id, messages.message_id AS messages_message_id, messages.user_id AS messages_user_id, messages.first_name AS messages_first_name, messages.last_name AS messages_last_name, messages.date AS messages_date, messages.text AS messages_text
+FROM messages
+WHERE messages.user_id = ?) AS anon_1]
+[parameters: [{}]]
+(Background on this error at: http://sqlalche.me/e/14/f405)"
+2021-05-26 18:35:34,532 (__init__.py:491 MainThread) ERROR - TeleBot: "Exception traceback:
+Traceback (most recent call last):
+  File "C:\Users\sergm\AppData\Local\Programs\Python\Python39\lib\site-packages\sqlalchemy\engine\base.py", line 1608, in _execute_context
+    context = constructor(
+  File "C:\Users\sergm\AppData\Local\Programs\Python\Python39\lib\site-packages\sqlalchemy\engine\default.py", line 968, in _init_compiled
+    self.cursor = self.create_cursor()
+  File "C:\Users\sergm\AppData\Local\Programs\Python\Python39\lib\site-packages\sqlalchemy\engine\default.py", line 1316, in create_cursor
+    return self.create_default_cursor()
+  File "C:\Users\sergm\AppData\Local\Programs\Python\Python39\lib\site-packages\sqlalchemy\engine\default.py", line 1319, in create_default_cursor
+    return self._dbapi_connection.cursor()
+  File "C:\Users\sergm\AppData\Local\Programs\Python\Python39\lib\site-packages\sqlalchemy\pool\base.py", line 970, in cursor
+    return self.connection.cursor(*args, **kwargs)
+sqlite3.ProgrammingError: SQLite objects created in a thread can only be used in that same thread. The object was created in thread id 7156 and this is thread id 11444.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\sergm\AppData\Local\Programs\Python\Python39\lib\site-packages\telebot\__init__.py", line 486, in infinity_polling
+    self.polling(none_stop=True, timeout=timeout, long_polling_timeout=long_polling_timeout, *args, **kwargs)
+  File "C:\Users\sergm\AppData\Local\Programs\Python\Python39\lib\site-packages\telebot\__init__.py", line 514, in polling
+    self.__threaded_polling(none_stop, interval, timeout, long_polling_timeout)
+  File "C:\Users\sergm\AppData\Local\Programs\Python\Python39\lib\site-packages\telebot\__init__.py", line 573, in __threaded_polling
+    raise e
+  File "C:\Users\sergm\AppData\Local\Programs\Python\Python39\lib\site-packages\telebot\__init__.py", line 536, in __threaded_polling
+    self.worker_pool.raise_exceptions()
+  File "C:\Users\sergm\AppData\Local\Programs\Python\Python39\lib\site-packages\telebot\util.py", line 117, in raise_exceptions
+    raise self.exception_info
+  File "C:\Users\sergm\AppData\Local\Programs\Python\Python39\lib\site-packages\telebot\util.py", line 69, in run
+    task(*args, **kwargs)
+  File "d:\my_telebot\my_telebot.py", line 22, in start
+    answer = treatment.start(message)
+  File "d:\my_telebot\treatment.py", line 30, in start
+    if self.if_user_exists(message):
+  File "d:\my_telebot\treatment.py", line 67, in if_user_exists
+    result = self.session.query(Messages).where(
+  File "C:\Users\sergm\AppData\Local\Programs\Python\Python39\lib\site-packages\sqlalchemy\orm\query.py", line 3064, in count
+    return self._from_self(col).enable_eagerloads(False).scalar()
+  File "C:\Users\sergm\AppData\Local\Programs\Python\Python39\lib\site-packages\sqlalchemy\orm\query.py", line 2805, in scalar
+    ret = self.one()
+  File "C:\Users\sergm\AppData\Local\Programs\Python\Python39\lib\site-packages\sqlalchemy\orm\query.py", line 2782, in one
+    return self._iter().one()
+  File "C:\Users\sergm\AppData\Local\Programs\Python\Python39\lib\site-packages\sqlalchemy\orm\query.py", line 2820, in _iter
+    result = self.session.execute(
+  File "C:\Users\sergm\AppData\Local\Programs\Python\Python39\lib\site-packages\sqlalchemy\orm\session.py", line 1670, in execute
+    result = conn._execute_20(statement, params or {}, execution_options)
+  File "C:\Users\sergm\AppData\Local\Programs\Python\Python39\lib\site-packages\sqlalchemy\engine\base.py", line 1520, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "C:\Users\sergm\AppData\Local\Programs\Python\Python39\lib\site-packages\sqlalchemy\sql\elements.py", line 313, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "C:\Users\sergm\AppData\Local\Programs\Python\Python39\lib\site-packages\sqlalchemy\engine\base.py", line 1389, in _execute_clauseelement
+    ret = self._execute_context(
+  File "C:\Users\sergm\AppData\Local\Programs\Python\Python39\lib\site-packages\sqlalchemy\engine\base.py", line 1614, in _execute_context
+    self._handle_dbapi_exception(
+  File "C:\Users\sergm\AppData\Local\Programs\Python\Python39\lib\site-packages\sqlalchemy\engine\base.py", line 1929, in _handle_dbapi_exception
+    util.raise_(
+  File "C:\Users\sergm\AppData\Local\Programs\Python\Python39\lib\site-packages\sqlalchemy\util\compat.py", line 211, in raise_
+    raise exception
+  File "C:\Users\sergm\AppData\Local\Programs\Python\Python39\lib\site-packages\sqlalchemy\engine\base.py", line 1608, in _execute_context
+    context = constructor(
+  File "C:\Users\sergm\AppData\Local\Programs\Python\Python39\lib\site-packages\sqlalchemy\engine\default.py", line 968, in _init_compiled
+    self.cursor = self.create_cursor()
+  File "C:\Users\sergm\AppData\Local\Programs\Python\Python39\lib\site-packages\sqlalchemy\engine\default.py", line 1316, in create_cursor
+    return self.create_default_cursor()
+  File "C:\Users\sergm\AppData\Local\Programs\Python\Python39\lib\site-packages\sqlalchemy\engine\default.py", line 1319, in create_default_cursor
+    return self._dbapi_connection.cursor()
+  File "C:\Users\sergm\AppData\Local\Programs\Python\Python39\lib\site-packages\sqlalchemy\pool\base.py", line 970, in cursor
+    return self.connection.cursor(*args, **kwargs)
+sqlalchemy.exc.ProgrammingError: (sqlite3.ProgrammingError) SQLite objects created in a thread can only be used in that same thread. The object was created in thread id 7156 and this is thread id 11444.
+[SQL: SELECT count(*) AS count_1
+FROM (SELECT messages.id AS messages_id, messages.message_id AS messages_message_id, messages.user_id AS messages_user_id, messages.first_name AS messages_first_name, messages.last_name AS messages_last_name, messages.date AS messages_date, messages.text AS messages_text
+FROM messages
+WHERE messages.user_id = ?) AS anon_1]
+[parameters: [{}]]
+(Background on this error at: http://sqlalche.me/e/14/f405)
+"
+2021-05-26 18:35:43,604 (__init__.py:495 MainThread) ERROR - TeleBot: "Infinity polling: polling exited"
+2021-05-26 18:35:43,604 (__init__.py:497 MainThread) ERROR - TeleBot: "Break infinity polling"
+PS D:\my_telebot>

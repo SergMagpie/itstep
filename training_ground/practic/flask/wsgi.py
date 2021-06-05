@@ -1,0 +1,33 @@
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+def get_films():
+    return [
+        {
+            'id': 1,
+            'title': 'Harry Potter',
+            'release_date': 'November 4, 2001'
+        },
+        {
+            'id': 2,
+            'title': 'Hello, World',
+            'release_date': 'Desember 4, 2021'
+
+        }
+
+    ]
+
+@app.route('/')
+@app.route('/hello')
+def index():
+    films = get_films()
+    return render_template('hello.html', films=films)
+
+@app.route('/about')
+def about():
+    # print(k)
+    return render_template('about.html', title='About')
+
+if __name__ == "__main__":
+    app.run(debug=True)

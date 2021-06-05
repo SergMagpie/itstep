@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> {% if title %}
+    <title>WLearn -- {{ title }}</title>
+    {% else %}
+    <title>WLearn</title>
+    {% endif %}
+</head>
+
+<body>
+    <div>
+        <table>
+            <tr>
+                <td><a href="/words">Display a list of all words</a></td>
+                <td><a href="/add">Add a word</a></td>
+                <td><a href="/">Home</a></td>
+            </tr>
+        </table>
+        {% block content %} {% endblock %}
+    </div>
+</body>
+
+</html>

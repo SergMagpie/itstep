@@ -1,0 +1,12 @@
+{% extends "base.html" %} {% block content %}
+<h1>Words</h1>
+<p>List of Words:</p>
+<table id="tbl">
+    {% for word in words %}
+    <tr class={{ "mark" if word.learned else "unmark"}}>
+        <td><a href="/words/{{word.word}}"> {{word.word}} </a></td>
+        <td><a href="/words/{{word.word}}"> {{word.translate}} </a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

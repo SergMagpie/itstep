@@ -1,0 +1,15 @@
+{% extends "base.html" %} {% block content %}
+<h1>Change word</h1>
+<form action="/changeword" name="form1" method="POST">
+    <table>
+        <input type="hidden" name="oldword" value='{{word}}'>
+        <tr>
+            <td><input type="text" name="word" value='{{word}}'></td>
+            <td><input type="text" name="translate" value='{{translate}}'></td>
+            <td><input type="submit" value="Change"></td>
+        </tr>
+    </table>
+
+</form>
+{% endblock %}
+<!-- onclick="return confirm('Are you sure?')" -->

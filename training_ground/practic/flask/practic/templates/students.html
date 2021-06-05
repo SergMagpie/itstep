@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Students</h1>
+    <p>List of students</p>
+    <a class="btn btn-primary" href="add" role="button">Add new student</a>
+    <ul class="list-group">
+        {% for id, student in students.items() %}
+            <li class="list-group-item"> <a href="/students/{{id}}"> {{student}} </a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

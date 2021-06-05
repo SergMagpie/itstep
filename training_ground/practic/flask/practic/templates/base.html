@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta href="styles.css" rel="stylesheet" type="text/css" charset="UTF-8"> {% if title %}
+    <title>Flask tutorial - {{ title }}</title>
+    {% else %}
+    <title>Flask tutorial</title>
+    {% endif %}
+</head>
+
+<body>
+    <div id="content">
+        <table>
+            <tr>
+                <td><a href="">Пункт меню</a></td>
+                <td><a href="">Пункт меню</a></td>
+                <td><a href="">Пункт меню</a></td>
+            </tr>
+        </table>
+        {% block content %} {% endblock %}
+    </div>
+</body>
+
+</html>
