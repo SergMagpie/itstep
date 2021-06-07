@@ -67,10 +67,13 @@ def outcome_records():
     значеннями"""
     return [r.__dict__ for r in w.get_outcome()]
 
+@app.post("/records")
+def post_records():
+    """POST /records - створення нового запису"""
+    
 
 """
 GET /logins - список усіх користувачів (усі логіни)
-POST /records - створення нового запису
 PATCH /records/<id> - зміна конкретного запису по id
 DELETE /records/<id> - видалення конкретного запису по id
 """

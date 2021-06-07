@@ -18,9 +18,9 @@ manager = LoginManager(SECRET,
 
 DB = {
     'users': {
-        'johndoe@mail.com': {
+        'com': {
             'name': 'John Doe',
-            'password': 'hunter2'
+            'password': 'com'
         }
     }
 }
