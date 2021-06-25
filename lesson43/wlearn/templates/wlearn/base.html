@@ -9,14 +9,18 @@
 </head>
 
 <body>
-    <div class="topnav">
-        <a href='/'>Home</a>
-        <a href='first-task'>First task</a>
-        <a href='words'>Words</a>
-        <a href='add-word'>Add word</a>
-        <a href='new-user'>New user</a>
-        <a href='login'>Login</a>
-    </div>
+    <ul class="topnav">
+        {% for item in main_menu %}
+        <li><a class='{{item.class}}' href='{{item.url_name}}'>{{item.title}}</a></li>
+        <!--  -->
+        {% endfor %}
+        <!--  -->
+        {% if request.user.is_authenticated %}
+        <!--  -->
+        <b><li class="name">Hello {{user.username}}</li></b>
+        <!--  -->
+        {% endif %}
+    </ul>
 
     {% block content %} {% endblock %}
 </body>

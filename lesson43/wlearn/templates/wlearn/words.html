@@ -1,0 +1,15 @@
+{% extends 'wlearn/base.html' %} {% block content %}
+<h1>{{title}}</h1>
+{% if words %}
+<p>List of Words:</p>
+
+<table id="tbl">
+    {% for word in words %}
+    <td><a href="/words/{{word.word}}"> {{word.word}} </a></td>
+    <td><a href="/words/{{word.word}}"> {{word.translate}} </a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>List of words is empty</p>
+{% endif %} {% endblock %}
