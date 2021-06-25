@@ -1,12 +1,13 @@
 <h1>Books</h1>
 <ul>
     {% for book in object_list %}
-    <li>{{ book.title }} - {{ book.year_of_publication }}</li>
+    <li>{{ book.title }} - {{ book.year_of_publication }} - {{ book.author__name }} {{ book.dcount }}
+
+    </li>
     {% empty %}
     <li>No articles yet.</li>
     {% endfor %}
 </ul>
-{% for contact in page_obj %} {# Each "contact" is a Contact model object. #} {{ contact.full_name|upper }}<br> ... {% endfor %}
 
 <div class="pagination">
     <span class="step-links">

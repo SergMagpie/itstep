@@ -1,0 +1,27 @@
+{% extends 'wlearn/base.html' %} {% block content %}
+<h1>{{title}}</h1>
+<form method="POST">
+    {% csrf_token %}
+    <div>
+        <input type="number" name="first_number">
+        <input type="number" name="second_number">
+        <input type="number" name="third_number">
+    </div>
+
+    <br>
+    <div>
+        <input type="radio" id="contactChoice1" name="mission" value="minimum">
+        <label for="contactChoice1">The minimum of three</label>
+
+        <input type="radio" id="contactChoice2" name="mission" value="maximum">
+        <label for="contactChoice2">The maximum of three</label>
+
+        <input type="radio" id="contactChoice3" name="mission" value="mean">
+        <label for="contactChoice3">Arithmetic mean</label>
+    </div>
+
+    <button type="submit">Recalculate</button>
+</form>
+{% if rez %}
+<h2>Rezultat: {{mission}}{{numbers}} = {{rez}}</h2>
+{% endif %} {% endblock %}
