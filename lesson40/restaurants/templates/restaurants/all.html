@@ -19,8 +19,9 @@
                         <form action='/' method="GET">
                             <select name="specialization">
                             <option>Select</option>
-                            {% for restaurant in restaurants %}
-                            <option value="{{restaurant.specialization}}">{{restaurant.specialization}}</option>
+                            {% regroup restaurants|dictsort:"specialization" by specialization as specialization_list %}                            
+                            {% for item in specialization_list %}
+                            <option value="{{item.grouper}}">{{item.grouper}}</option>
                             {% endfor %}
                         </select>
                     </td>

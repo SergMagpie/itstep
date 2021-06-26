@@ -4,9 +4,102 @@
 <p>List of Words:</p>
 
 <table id="tbl">
-    {% for word in words %}
-    <td><a href="/words/{{word.word}}"> {{word.word}} </a></td>
-    <td><a href="/words/{{word.word}}"> {{word.translate}} </a></td>
+    <tr class='header'>
+        <td>
+            <center>Word</center>
+        </td>
+        <td>
+            <center>Translate</center>
+        </td>
+        <td>
+            <table width='100%'>
+                <tr>
+                    <td colspan="2">
+                        <center>Creator</center>
+                    </td>
+                </tr>
+                <tr>
+
+                    <td colspan="2">
+                        <form action="{% url 'words' %}" method="GET">
+                            <select name="creator">
+                            <option>Select</option>
+                            {% regroup words|dictsort:"creator.pk" by creator as creator_list %}
+                            {% for item in creator_list %}
+                            <option value="{{item.grouper}}">{{item.grouper}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="hidden" name="command" value="select_creator">
+                        <input type="submit" value="Select">
+                        </form>
+                    </td>
+                    <td>
+                        <form action="{% url 'words' %}" method="GET">
+                            <input type="hidden" name="command" value="clear">
+                            <input type="submit" value="Clear">
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <table width='100%'>
+                <tr>
+                    <td colspan="2">
+                        <center>Learned</center>
+                    </td>
+                </tr>
+                <tr>
+
+                    <td colspan="2">
+                        <form action="{% url 'words' %}" method="GET">
+                            <select name="learned">
+                            <option>Select</option>
+                            {% regroup words|dictsort:"learned" by learned as learned_list %}
+                            {% for item in learned_list %}
+                            <option value="{{item.grouper}}">{{item.grouper}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="hidden" name="command" value="select_learned">
+                        <input type="submit" value="Select">
+                        </form>
+                    </td>
+                    <td>
+                        <form action="{% url 'words' %}" method="GET">
+                            <input type="hidden" name="command" value="clear">
+                            <input type="submit" value="Clear">
+                        </form>
+                    </td>
+                </tr>
+            </table>
+
+        </td>
+        <td>
+            <center>Change</center>
+        </td>
+    </tr>
+    <tr>
+        {% for word in words %}
+        <!-- <td><a href="/words/{{word.word}}"> {{word.word}} </a></td> -->
+        <td> {{word.word}} </td>
+        <!-- <td><a href="/words/{{word.word}}"> {{word.translate}} </a></td> -->
+        <td> {{word.translate}} </td>
+        <td> {{word.creator}} </td>
+        <td> {{word.learned}} </td>
+        <td>
+            <form action="{% url 'change_word' pk=word.pk %}" method="GET">
+                <input type="hidden" name="command" value="change">
+                <input type="submit" value="Change">
+            </form>
+        </td>
     </tr>
     {% endfor %}
 </table>
