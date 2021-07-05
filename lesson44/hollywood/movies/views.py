@@ -39,10 +39,8 @@ class MoviesListView(ListView):
     template_name = 'movies/movies.html'
 
 
-
 class IndexTemplateView(TemplateView):
     template_name = 'movies/index.html'
-
 
 
 class MovieDetailView(DetailView):
@@ -51,51 +49,15 @@ class MovieDetailView(DetailView):
     context_object_name = 'move'
 
 
-def add_actor(request):
-    if request.method == "POST":
-        form = AddActorForm(request.POST)
-        if form.is_valid():
-            actor = form.save(commit=False)
-            actor.save()
-            return HttpResponse("<h3>Actor was saved</h3>")
-        print(form.errors)
-        return HttpResponse("<h3>Error</h3>")
-    else:
-        form = AddActorForm()
-        context = {'form': form}
-        return render(request, 'movies/create_actor_form.html', context)
-
-
 class ActorCreateView(CreateView):
     model = Actor
     form_class = AddActorForm
     template_name = 'movies/create_actor_form.html'
     success_url = reverse_lazy('movies')
 
+
 class GenreCreateView(CreateView):
     model = Genre
     form_class = AddGenreForm
     template_name = 'movies/create_genre_form.html'
     success_url = reverse_lazy('movies')
-
-    # def form_valid(self, form):
-    #     """If the form is valid, save the associated model."""
-    #     movie = form.save(commit=False)
-    #     movie.created_at = timezone.now()
-    #     movie.save()
-    #     self.object = form.save_m2m()
-    #     return super().form_valid(form)
-
-# def add_genre(request):
-#     if request.method == "POST":
-#         form = AddGenreForm(request.POST)
-#         if form.is_valid():
-#             genre = form.save(commit=False)
-#             genre.save()
-#             return HttpResponse("<h3>Genre was saved</h3>")
-#         print(form.errors)
-#         return HttpResponse("<h3>Error</h3>")
-#     else:
-#         form = AddGenreForm()
-#         context = {'form': form}
-#         return render(request, 'movies/create_genre_form.html', context)
