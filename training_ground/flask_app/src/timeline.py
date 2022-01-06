@@ -1,12 +1,9 @@
 from flask_restful import Resource
-
+from src import api, db
+from src.models import Events
 
 class Timeline(Resource):
     def get(self):
-        return {'Parameters':
-                    {'startDate': 'startDate',
-                     'endDate': 'endDate',
-                     'Type': ('cumulative', 'usual'),
-                     'Grouping': ('weekly', 'bi-weekly', 'monthly'),
-                     'Filters': ('attributes', 'values'), }
-                }, 200
+
+        events = list(map(lambda x: x.to_dict(), db.session.query(Events).limit(10)))
+        return events, 200
