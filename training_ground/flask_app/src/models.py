@@ -1,4 +1,3 @@
-
 from src import db
 
 
@@ -20,18 +19,3 @@ class Events(db.Model):
         self.source = source
         self.stars = stars
         self.timestamp = timestamp
-
-    def __repr__(self):
-        return f'({self.id}, {self.asin}, {self.brand}, {self.id_code}, {self.source}, {self.stars}, {self.timestamp})'
-
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'asin': self.asin,
-            'brand': self.brand,
-            'id_code': self.id_code,
-            'source': self.source,
-            'stars': self.stars,
-            'timestamp': self.timestamp.strftime('%Y-%m-%d'),
-        }
-
